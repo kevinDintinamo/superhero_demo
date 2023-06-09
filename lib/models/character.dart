@@ -1,4 +1,9 @@
-import 'shared/thumbnail.dart';
+import 'shared/image_path.dart';
+import 'dart:convert';
+
+Character characterFromJson(String str) => Character.fromJson(json.decode(str));
+
+String characterToJson(Character data) => json.encode(data.toJson());
 
 /// Super Hero Character.
 class Character {
@@ -6,7 +11,7 @@ class Character {
   final String name;
   final String description;
   final String modifiedDate;
-  final Thumbnail thumbnail;
+  final ImagePath thumbnail;
 
   final int comicsAvailableCount;
   final int storiesAvailableCount;
@@ -31,7 +36,7 @@ class Character {
       name: json['name'] ?? '',
       description: json['description'] ?? '',
       modifiedDate: json['modified'] ?? '',
-      thumbnail: Thumbnail.fromJson(json['thumbnail']),
+      thumbnail: ImagePath.fromJson(json['thumbnail']),
       comicsAvailableCount: json['comics']['available'],
       storiesAvailableCount: json['stories']['available'],
       eventsAvailableCount: json['events']['available'],
