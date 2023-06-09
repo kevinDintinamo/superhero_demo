@@ -12,7 +12,7 @@ class Character {
   final String name;
   final String description;
   final String modifiedDate;
-  final ImagePath thumbnail;
+  final ImagePath? thumbnail;
 
   final int comicsAvailableCount;
   final int storiesAvailableCount;
@@ -24,7 +24,7 @@ class Character {
     required this.name,
     required this.description,
     required this.modifiedDate,
-    required this.thumbnail,
+    this.thumbnail,
     this.comicsAvailableCount = 0,
     this.storiesAvailableCount = 0,
     this.eventsAvailableCount = 0,
@@ -50,7 +50,7 @@ class Character {
         "name": name,
         "description": description,
         "modified": modifiedDate,
-        "thumbnail": thumbnail.toJson(),
+        "thumbnail": thumbnail?.toJson(),
         "comics": {"available": comicsAvailableCount},
         "stories": {"available": storiesAvailableCount},
         "events": {"available": eventsAvailableCount},

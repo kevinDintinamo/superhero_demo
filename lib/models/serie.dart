@@ -13,7 +13,7 @@ class Serie {
   final int startYear;
   final int endYear;
   final String modifiedDate;
-  final ImagePath thumbnail;
+  final ImagePath? thumbnail;
 
   Serie({
     required this.id,
@@ -22,7 +22,7 @@ class Serie {
     required this.startYear,
     required this.endYear,
     required this.modifiedDate,
-    required this.thumbnail,
+    this.thumbnail,
   });
 
   factory Serie.fromJson(Map<String, dynamic> json) {
@@ -44,6 +44,6 @@ class Serie {
         "startYear": startYear,
         "endYear": endYear,
         "modified": modifiedDate,
-        "thumbnail": thumbnail.toJson(),
+        "thumbnail": thumbnail?.toJson(),
       };
 }

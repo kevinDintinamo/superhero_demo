@@ -12,7 +12,7 @@ class Comic {
   final String title;
   final String description;
   final String modifiedDate;
-  final ImagePath thumbnail;
+  final ImagePath? thumbnail;
 
   Comic({
     required this.id,
@@ -20,7 +20,7 @@ class Comic {
     required this.title,
     required this.description,
     required this.modifiedDate,
-    required this.thumbnail,
+    this.thumbnail,
   });
 
   factory Comic.fromJson(Map<String, dynamic> json) {
@@ -40,6 +40,6 @@ class Comic {
         "title": title,
         "description": description,
         "modified": modifiedDate,
-        "thumbnail": thumbnail.toJson(),
+        "thumbnail": thumbnail?.toJson(),
       };
 }

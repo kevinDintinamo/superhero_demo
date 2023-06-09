@@ -13,7 +13,7 @@ class Event {
   final String modifiedDate;
   final String startDate;
   final String endDate;
-  final ImagePath thumbnail;
+  final ImagePath? thumbnail;
 
   Event({
     required this.id,
@@ -22,7 +22,7 @@ class Event {
     required this.startDate,
     required this.endDate,
     required this.modifiedDate,
-    required this.thumbnail,
+    this.thumbnail,
   });
 
   factory Event.fromJson(Map<String, dynamic> json) {
@@ -44,6 +44,6 @@ class Event {
         "startDate": startDate,
         "endDate": endDate,
         "modified": modifiedDate,
-        "thumbnail": thumbnail.toJson(),
+        "thumbnail": thumbnail?.toJson(),
       };
 }
