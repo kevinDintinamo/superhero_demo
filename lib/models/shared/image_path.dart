@@ -1,20 +1,20 @@
 import 'dart:convert';
 
-Thumbnail thumbnailFromJson(String str) => Thumbnail.fromJson(json.decode(str));
+ImagePath imagePathFromJson(String str) => ImagePath.fromJson(json.decode(str));
 
-String thumbnailToJson(Thumbnail data) => json.encode(data.toJson());
+String imagePathToJson(ImagePath data) => json.encode(data.toJson());
 
-/// Image formed by the route and the extension of the file.
-class Thumbnail {
+/// Image formed by the route (path) and the extension of the file.
+class ImagePath {
   final String path;
   final String fileExtension;
 
-  Thumbnail({
+  ImagePath({
     required this.path,
     required this.fileExtension,
   });
 
-  factory Thumbnail.fromJson(Map<String, dynamic> json) => Thumbnail(
+  factory ImagePath.fromJson(Map<String, dynamic> json) => ImagePath(
         path: json["path"],
         fileExtension: json["extension"],
       );
