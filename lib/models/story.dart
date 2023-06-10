@@ -30,7 +30,7 @@ class Story {
       description: json['description'] ?? '',
       type: json['type'] ?? '',
       modifiedDate: json['modified'] ?? '',
-      thumbnail: ImagePath.fromJson(json['thumbnail']),
+      thumbnail: imagePathFromJsonMap(json['thumbnail']),
     );
   }
 

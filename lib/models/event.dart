@@ -33,7 +33,7 @@ class Event {
       startDate: json['startDate'] ?? '',
       endDate: json['endDate'] ?? '',
       modifiedDate: json['modified'] ?? '',
-      thumbnail: ImagePath.fromJson(json['thumbnail']),
+      thumbnail: imagePathFromJsonMap(json['thumbnail']),
     );
   }
 

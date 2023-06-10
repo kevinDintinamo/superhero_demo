@@ -2,6 +2,11 @@ import 'dart:convert';
 
 ImagePath imagePathFromJson(String str) => ImagePath.fromJson(json.decode(str));
 
+ImagePath? imagePathFromJsonMap(Map<String, dynamic>? json) {
+  if (json == null) return null;
+  return ImagePath.fromJson(json);
+}
+
 String imagePathToJson(ImagePath data) => json.encode(data.toJson());
 
 /// Image formed by the route (path) and the extension of the file.

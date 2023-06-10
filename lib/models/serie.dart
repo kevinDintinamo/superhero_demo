@@ -33,7 +33,7 @@ class Serie {
       startYear: json['startYear'] ?? 0,
       endYear: json['endYear'] ?? DateTime(DateTime.now().year).year,
       modifiedDate: json['modified'] ?? '',
-      thumbnail: ImagePath.fromJson(json['thumbnail']),
+      thumbnail: imagePathFromJsonMap(json['thumbnail']),
     );
   }
 

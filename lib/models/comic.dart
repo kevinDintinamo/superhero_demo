@@ -30,7 +30,7 @@ class Comic {
       title: json['title'] ?? '',
       description: json['description'] ?? '',
       modifiedDate: json['modified'] ?? '',
-      thumbnail: ImagePath.fromJson(json['thumbnail']),
+      thumbnail: imagePathFromJsonMap(json['thumbnail']),
     );
   }
 
