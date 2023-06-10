@@ -44,22 +44,7 @@ class _HomeView extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           height: 350,
-          child: PageView.builder(
-            itemCount: 10,
-            pageSnapping: true,
-            controller: controller,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) => Container(
-              // padding: const EdgeInsets.symmetric(horizontal: 10),
-              margin: const EdgeInsets.symmetric(horizontal: 10),
-              height: 100,
-              width: 100,
-              decoration: const BoxDecoration(
-                color: Colors.red,
-                borderRadius: BorderRadius.all(Radius.circular(50.0)),
-              ),
-            ),
-          ),
+          child: SinglePageView(controller: controller),
         ),
         Padding(
           padding: const EdgeInsets.all(36.0),
