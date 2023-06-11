@@ -74,6 +74,10 @@ class _DetailedInfoWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final subPageIndex = ref.watch(storySubPageIndexProvider);
+    if (stories.isEmpty) {
+      return const Center(child: Text('No Stories to Show'));
+    }
+
     final modifiedDate =
         Utils.getDateFormatted(stories[subPageIndex].modifiedDate);
 

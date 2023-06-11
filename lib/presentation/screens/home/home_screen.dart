@@ -83,7 +83,7 @@ class _DetailedInfoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (characters.isEmpty) {
-      return const Text('No Data to Show');
+      return const Center(child: Text('No Characters to Show'));
     }
 
     final modifiedDate =

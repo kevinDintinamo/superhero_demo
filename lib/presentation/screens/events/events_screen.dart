@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:superhero_demo/data/data_sources/character_data_source.dart';
 
+import '../../../models/events/events.dart';
 import '../../../utils/utils.dart';
 import '../../providers/providers.dart';
 import '../../widgets/widgets.dart';
@@ -74,6 +74,11 @@ class _DetailedInfoWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final subPageIndex = ref.watch(eventSubPageIndexProvider);
+
+    if (events.isEmpty) {
+      return const Center(child: Text('No Events to Show'));
+    }
+
     final modifiedDate =
         Utils.getDateFormatted(events[subPageIndex].modifiedDate);
 

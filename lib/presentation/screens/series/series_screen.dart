@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../models/series/serie.dart';
+import '../../../models/series/series.dart';
 import '../../../utils/utils.dart';
 import '../../providers/providers.dart';
 import '../../widgets/widgets.dart';
@@ -74,6 +74,10 @@ class _DetailedInfoWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final subPageIndex = ref.watch(serieSubPageIndexProvider);
+    if (series.isEmpty) {
+      return const Center(child: Text('No Series to Show'));
+    }
+
     final modifiedDate =
         Utils.getDateFormatted(series[subPageIndex].modifiedDate);
 

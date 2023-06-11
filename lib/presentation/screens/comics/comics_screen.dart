@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../models/comics/comics.dart';
 import '../../../utils/utils.dart';
 import '../../providers/providers.dart';
 import '../../widgets/widgets.dart';
@@ -67,12 +68,16 @@ class _DetailedInfoWidget extends ConsumerWidget {
     required this.theme,
   });
 
-  final List comics;
+  final List<Comic> comics;
   final ThemeData theme;
 
   @override
   Widget build(BuildContext context, ref) {
     final subPageIndex = ref.watch(comicSubPageIndexProvider);
+    if (comics.isEmpty) {
+      return const Center(child: Text('No Comics to Show'));
+    }
+
     final modifiedDate =
         Utils.getDateFormatted(comics[subPageIndex].modifiedDate);
 
