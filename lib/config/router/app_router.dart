@@ -16,9 +16,9 @@ final appRouter = GoRouter(
       builder: (context, state) => const StoriesScreen(),
     ),
     GoRoute(
-      path: '/${ComicScreen.screenName}',
-      name: ComicScreen.screenName,
-      builder: (context, state) => const ComicScreen(),
+      path: '/${ComicsScreen.screenName}',
+      name: ComicsScreen.screenName,
+      builder: (context, state) => const ComicsScreen(),
     ),
   ],
 );
