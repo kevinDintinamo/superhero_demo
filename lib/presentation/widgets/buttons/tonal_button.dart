@@ -22,7 +22,7 @@ class TonalButton extends StatelessWidget {
             const SizedBox(width: 8.0),
             // Promote a more symmetrical size.
             ConstrainedBox(
-              constraints: const BoxConstraints(minWidth: 75),
+              constraints: const BoxConstraints(minWidth: 85),
               child: Text(text),
             ),
           ],
