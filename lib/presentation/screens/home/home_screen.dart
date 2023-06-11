@@ -137,7 +137,14 @@ class _MoreInfoActionWidgets extends ConsumerWidget {
         TonalButton(
           text: 'Series ($seriesCount)',
           iconData: Icons.ac_unit,
-          onPresed: seriesCount == 0 ? null : () {},
+          onPresed: seriesCount == 0
+              ? null
+              : () {
+                  ref
+                      .read(characterSelectedIdProvider.notifier)
+                      .update((state) => character.id);
+                  context.pushNamed(SeriesScreen.screenName);
+                },
         ),
         TonalButton(
           text: 'Comics ($comicsCount)',
