@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'shared/image_path.dart';
+import '../shared/image_path.dart';
 
 Event eventFromJson(String str) => Event.fromJson(json.decode(str));
 
