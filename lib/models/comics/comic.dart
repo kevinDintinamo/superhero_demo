@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'shared/image_path.dart';
+import '../shared/image_path.dart';
 
 Comic comicFromJson(String str) => Comic.fromJson(json.decode(str));
 
