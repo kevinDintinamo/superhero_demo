@@ -19,7 +19,7 @@ final comicDataProvider = FutureProvider<ComicWrapper>((ref) async {
   return wrapper;
 });
 
-/// Value of the page (offset) im in the list of characters pagination.
+/// Value of the page (offset) im in the list of Comics pagination.
 final comicsOffsetProvider = StateProvider<int>((ref) {
   return 0;
 });
