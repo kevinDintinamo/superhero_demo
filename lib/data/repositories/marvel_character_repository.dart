@@ -17,33 +17,49 @@ class MarvelCharacterRepository implements CharacterDataSource {
   });
 
   @override
-  Future getCharacter() async {
+  Future<List<Character>> getCharacters() async {
     var data = await _getDataFromApi();
-    if (data == null) return;
+    if (data == null || data.results.isEmpty) return [];
+
+    var characterList = data.results.map((e) => Character.fromJson(e)).toList();
+
+    return characterList;
   }
 
   @override
-  Future getComics(int characterId) async {
+  Future<List<Comic>> getComics(int characterId) async {
     final data = await _getDataFromApi('characters/$characterId/comics');
-    if (data == null || data.results.isEmpty) return;
+    if (data == null || data.results.isEmpty) return [];
+
+    final comicList = data.results.map((e) => Comic.fromJson(e)).toList();
+    return comicList;
   }
 
   @override
-  Future getEvents(int characterId) async {
+  Future<List<Event>> getEvents(int characterId) async {
     final data = await _getDataFromApi('characters/$characterId/events');
-    if (data == null || data.results.isEmpty) return;
+    if (data == null || data.results.isEmpty) return [];
+
+    final eventList = data.results.map((e) => Event.fromJson(e)).toList();
+    return eventList;
   }
 
   @override
-  Future getSeries(int characterId) async {
+  Future<List<Serie>> getSeries(int characterId) async {
     final data = await _getDataFromApi('characters/$characterId/series');
-    if (data == null || data.results.isEmpty) return;
+    if (data == null || data.results.isEmpty) return [];
+
+    final serieList = data.results.map((e) => Serie.fromJson(e)).toList();
+    return serieList;
   }
 
   @override
-  Future getStories(int characterId) async {
+  Future<List<Story>> getStories(int characterId) async {
     final data = await _getDataFromApi('characters/$characterId/stories');
-    if (data == null || data.results.isEmpty) return;
+    if (data == null || data.results.isEmpty) return [];
+
+    final storyList = data.results.map((e) => Story.fromJson(e)).toList();
+    return storyList;
   }
 
   Future<DataWrapper?> _getDataFromApi([String url = 'characters']) async {

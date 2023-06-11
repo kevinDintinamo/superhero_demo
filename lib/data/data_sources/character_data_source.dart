@@ -1,15 +1,37 @@
+import '../../models/character.dart';
+import '../../models/event.dart';
+import '../../models/story.dart';
+import '../../models/comic.dart';
+import '../../models/serie.dart';
+
+export '../../models/character.dart';
+export '../../models/event.dart';
+export '../../models/story.dart';
+export '../../models/comic.dart';
+export '../../models/serie.dart';
+
 abstract class CharacterDataSource {
   String baseUrl;
 
   CharacterDataSource(this.baseUrl);
 
-  Future<dynamic> getCharacter() async {}
+  Future<List<Character>> getCharacters() {
+    throw UnimplementedError();
+  }
 
-  Future<dynamic> getComics(int characterId) async {}
+  Future<List<Comic>> getComics(int characterId) async {
+    throw UnimplementedError();
+  }
 
-  Future<dynamic> getEvents(int characterId) async {}
+  Future<List<Event>> getEvents(int characterId) async {
+    throw UnimplementedError();
+  }
 
-  Future<dynamic> getSeries(int characterId) async {}
+  Future<List<Serie>> getSeries(int characterId) async {
+    throw UnimplementedError();
+  }
 
-  Future<dynamic> getStories(int characterId) async {}
+  Future<List<Story>> getStories(int characterId) async {
+    throw UnimplementedError();
+  }
 }
