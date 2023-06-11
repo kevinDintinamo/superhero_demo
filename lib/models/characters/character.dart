@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'shared/image_path.dart';
+import '../shared/image_path.dart';
 
 Character characterFromJson(String str) => Character.fromJson(json.decode(str));
 
