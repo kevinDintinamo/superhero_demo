@@ -46,24 +46,25 @@ class BottomPageNavigationBar extends ConsumerWidget {
         final rightText =
             (actualPage + 1 < maxPagesAvailable) ? '${actualPage + 2}' : '';
 
+        onLeftPressetd() {
+          ref
+              .read(offsetProvider.notifier)
+              .update((state) => state - apiLimitPerQuery);
+        }
+
+        onRightPressed() {
+          ref
+              .read(offsetProvider.notifier)
+              .update((state) => state + apiLimitPerQuery);
+        }
+
         return _BottomPageNavigationBar(
           leftText: leftText,
           centerText: centerText,
           rightText: rightText,
-          onLeftPressed: actualPage == 0
-              ? null
-              : () {
-                  ref
-                      .read(offsetProvider.notifier)
-                      .update((state) => state - 20);
-                },
-          onRightPressed: actualPage >= maxPagesAvailable - 1
-              ? null
-              : () {
-                  ref
-                      .read(offsetProvider.notifier)
-                      .update((state) => state + 20);
-                },
+          onLeftPressed: actualPage == 0 ? null : onLeftPressetd,
+          onRightPressed:
+              actualPage >= maxPagesAvailable - 1 ? null : onRightPressed,
         );
       },
     );
