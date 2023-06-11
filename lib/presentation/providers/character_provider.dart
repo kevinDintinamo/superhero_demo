@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/data/data_sources/character_data_source.dart';
 import '/presentation/providers/data_source_provider.dart';
 
-// Main Provider that fetch data from API
+// Main Provider that fetch data from API.
 final characterDataProvider = FutureProvider<CharacterWrapper>((ref) async {
   final characterOffset = ref.watch(charactersOffsetProvider);
 
