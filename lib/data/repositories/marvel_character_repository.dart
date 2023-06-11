@@ -26,7 +26,8 @@ class MarvelCharacterRepository implements CharacterDataSource {
         limit: 0,
         total: 0,
         count: 0,
-        characters: [],
+        results: [],
+        characters: <Character>[],
       );
     }
 
@@ -38,6 +39,7 @@ class MarvelCharacterRepository implements CharacterDataSource {
       limit: data.limit,
       total: data.total,
       count: data.count,
+      results: data.results,
       characters: characterList,
     );
 

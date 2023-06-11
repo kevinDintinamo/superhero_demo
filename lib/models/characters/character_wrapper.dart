@@ -1,17 +1,20 @@
+import '../shared/data_wrapper.dart';
 import 'character.dart';
 
-class CharacterWrapper {
-  final int offset;
-  final int limit;
-  final int total;
-  final int count;
+class CharacterWrapper extends DataWrapper {
   final List<Character> characters;
 
   CharacterWrapper({
-    required this.offset,
-    required this.limit,
-    required this.total,
-    required this.count,
+    required int offset,
+    required int limit,
+    required int total,
+    required int count,
+    required List results,
     required this.characters,
-  });
+  }) : super(
+            offset: offset,
+            limit: limit,
+            total: total,
+            count: count,
+            results: results);
 }
