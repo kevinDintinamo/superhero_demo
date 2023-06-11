@@ -1,10 +1,10 @@
-import '../../models/character.dart';
+import '/models/characters/characters.dart';
 import '../../models/event.dart';
 import '../../models/story.dart';
 import '../../models/comic.dart';
 import '../../models/serie.dart';
 
-export '../../models/character.dart';
+export '/models/characters/characters.dart';
 export '../../models/event.dart';
 export '../../models/story.dart';
 export '../../models/comic.dart';
@@ -15,7 +15,7 @@ abstract class CharacterDataSource {
 
   CharacterDataSource(this.baseUrl);
 
-  Future<List<Character>> getCharacters() {
+  Future<CharacterWrapper> getCharacters({int offset = 0}) {
     throw UnimplementedError();
   }
 
