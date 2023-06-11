@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:superhero_demo/utils/utils.dart';
 
-// import '../../../data/data_sources/character_data_source.dart';
 import '../../../models/characters/characters.dart';
 import '../../providers/providers.dart';
 import '../../widgets/widgets.dart';
@@ -150,7 +148,7 @@ class _MoreInfoActionWidgets extends ConsumerWidget {
                   ref
                       .read(characterSelectedIdProvider.notifier)
                       .update((state) => character.id);
-                  context.pushNamed(ComicScreen.screenName);
+                  context.pushNamed(ComicsScreen.screenName);
                 },
         ),
         TonalButton(
