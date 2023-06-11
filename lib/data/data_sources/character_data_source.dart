@@ -1,13 +1,13 @@
 import '/models/characters/characters.dart';
-import '../../models/event.dart';
-import '../../models/story.dart';
-import '../../models/comic.dart';
+import '../../models/events/event.dart';
+import '../../models/stories/story.dart';
+import '../../models/comics/comic.dart';
 import '../../models/serie.dart';
 
 export '/models/characters/characters.dart';
-export '../../models/event.dart';
-export '../../models/story.dart';
-export '../../models/comic.dart';
+export '../../models/events/event.dart';
+export '../../models/stories/story.dart';
+export '../../models/comics/comic.dart';
 export '../../models/serie.dart';
 
 abstract class CharacterDataSource {

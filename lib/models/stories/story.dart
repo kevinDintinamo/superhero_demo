@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'shared/image_path.dart';
+import '../shared/image_path.dart';
 
 Story storyFromJson(String str) => Story.fromJson(json.decode(str));
 
