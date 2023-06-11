@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'shared/image_path.dart';
+import '../shared/image_path.dart';
 
 Serie serieFromJson(String str) => Serie.fromJson(json.decode(str));
 
