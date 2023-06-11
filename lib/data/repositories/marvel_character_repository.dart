@@ -47,8 +47,11 @@ class MarvelCharacterRepository implements CharacterDataSource {
   }
 
   @override
-  Future<ComicWrapper> getComics(int characterId) async {
-    final data = await _getDataFromApi(url: 'characters/$characterId/comics');
+  Future<ComicWrapper> getComics(int characterId, {int offset = 0}) async {
+    final data = await _getDataFromApi(
+      url: 'characters/$characterId/comics',
+      offset: offset,
+    );
 
     if (data == null || data.results.isEmpty) {
       return ComicWrapper(
@@ -76,8 +79,12 @@ class MarvelCharacterRepository implements CharacterDataSource {
   }
 
   @override
-  Future<EventWrapper> getEvents(int characterId) async {
-    final data = await _getDataFromApi(url: 'characters/$characterId/events');
+  Future<EventWrapper> getEvents(int characterId, {int offset = 0}) async {
+    final data = await _getDataFromApi(
+      url: 'characters/$characterId/events',
+      offset: offset,
+    );
+
     if (data == null || data.results.isEmpty) {
       return EventWrapper(
         offset: 0,
@@ -104,8 +111,12 @@ class MarvelCharacterRepository implements CharacterDataSource {
   }
 
   @override
-  Future<SerieWrapper> getSeries(int characterId) async {
-    final data = await _getDataFromApi(url: 'characters/$characterId/series');
+  Future<SerieWrapper> getSeries(int characterId, {int offset = 0}) async {
+    final data = await _getDataFromApi(
+      url: 'characters/$characterId/series',
+      offset: offset,
+    );
+
     if (data == null || data.results.isEmpty) {
       return SerieWrapper(
         offset: 0,
@@ -132,8 +143,12 @@ class MarvelCharacterRepository implements CharacterDataSource {
   }
 
   @override
-  Future<StoryWrapper> getStories(int characterId) async {
-    final data = await _getDataFromApi(url: 'characters/$characterId/stories');
+  Future<StoryWrapper> getStories(int characterId, {int offset = 0}) async {
+    final data = await _getDataFromApi(
+      url: 'characters/$characterId/stories',
+      offset: offset,
+    );
+
     if (data == null || data.results.isEmpty) {
       return StoryWrapper(
         offset: 0,

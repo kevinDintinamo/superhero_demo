@@ -19,19 +19,19 @@ abstract class CharacterDataSource {
     throw UnimplementedError();
   }
 
-  Future<ComicWrapper> getComics(int characterId) async {
+  Future<ComicWrapper> getComics(int characterId, {int offset = 0}) async {
     throw UnimplementedError();
   }
 
-  Future<EventWrapper> getEvents(int characterId) async {
+  Future<EventWrapper> getEvents(int characterId, {int offset = 0}) async {
     throw UnimplementedError();
   }
 
-  Future<SerieWrapper> getSeries(int characterId) async {
+  Future<SerieWrapper> getSeries(int characterId, {int offset = 0}) async {
     throw UnimplementedError();
   }
 
-  Future<StoryWrapper> getStories(int characterId) async {
+  Future<StoryWrapper> getStories(int characterId, {int offset = 0}) async {
     throw UnimplementedError();
   }
 }
