@@ -5,9 +5,8 @@ import '../shared/image_path.dart';
 Character characterFromJson(String str) => Character.fromJson(json.decode(str));
 
 String characterToJson(Character data) => json.encode(data.toJson());
-class MainCha{}
-/// Super Hero Character.
-class Character implements MainCha {
+
+class Character {
   final int id;
   final String name;
   final String description;
