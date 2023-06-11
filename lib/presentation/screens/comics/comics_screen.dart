@@ -6,7 +6,7 @@ import '../../providers/providers.dart';
 import '../../widgets/widgets.dart';
 
 class ComicsScreen extends StatelessWidget {
-  static const screenName = 'comic_screen';
+  static const screenName = 'comics_screen';
 
   const ComicsScreen({super.key});
 
