@@ -16,11 +16,11 @@ class DataWrapper {
 
   factory DataWrapper.fromJson(Map<String, dynamic> json) {
     return DataWrapper(
-      offset: json['offset'],
-      limit: json['limit'],
-      total: json['total'],
-      count: json['count'],
-      results: json['results'],
+      offset: json['offset'] ?? 0,
+      limit: json['limit'] ?? 0,
+      total: json['total'] ?? 0,
+      count: json['count'] ?? 0,
+      results: json['results'] ?? [],
     );
   }
 }
