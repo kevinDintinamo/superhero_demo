@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../providers/character_provider.dart';
+import '../../../config/constants/constants.dart';
 
 class BottomPageNavigationBar extends ConsumerWidget {
   final FutureProvider dataProvider;
-  const BottomPageNavigationBar({super.key, required this.dataProvider});
+  final StateProvider<int> offsetProvider;
+  const BottomPageNavigationBar({
+    super.key,
+    required this.dataProvider,
+    required this.offsetProvider,
+  });
 
   @override
   Widget build(BuildContext context, ref) {
@@ -28,7 +33,7 @@ class BottomPageNavigationBar extends ConsumerWidget {
       // DataWrapper
       data: (dataWrp) {
         final total = dataWrp.total;
-        final limit = dataWrp.limit;
+        final limit = dataWrp.limit == 0 ? apiLimitPerQuery : dataWrp.limit;
         final offset = dataWrp.offset;
 
         final actualPage = (offset / limit).ceil();
@@ -49,14 +54,14 @@ class BottomPageNavigationBar extends ConsumerWidget {
               ? null
               : () {
                   ref
-                      .read(charactersOffsetProvider.notifier)
+                      .read(offsetProvider.notifier)
                       .update((state) => state - 20);
                 },
           onRightPressed: actualPage >= maxPagesAvailable - 1
               ? null
               : () {
                   ref
-                      .read(charactersOffsetProvider.notifier)
+                      .read(offsetProvider.notifier)
                       .update((state) => state + 20);
                 },
         );

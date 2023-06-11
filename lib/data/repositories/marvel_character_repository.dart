@@ -4,6 +4,7 @@ import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
+import '../../config/constants/constants.dart';
 import '../../config/constants/environment.dart';
 import '../../models/shared/data_wrapper.dart';
 import '../data_sources/character_data_source.dart';
@@ -23,7 +24,7 @@ class MarvelCharacterRepository implements CharacterDataSource {
     if (data == null || data.results.isEmpty) {
       return CharacterWrapper(
         offset: 0,
-        limit: 0,
+        limit: apiLimitPerQuery,
         total: 0,
         count: 0,
         results: [],
@@ -56,7 +57,7 @@ class MarvelCharacterRepository implements CharacterDataSource {
     if (data == null || data.results.isEmpty) {
       return ComicWrapper(
         offset: 0,
-        limit: 0,
+        limit: 20,
         total: 0,
         count: 0,
         results: [],
@@ -88,7 +89,7 @@ class MarvelCharacterRepository implements CharacterDataSource {
     if (data == null || data.results.isEmpty) {
       return EventWrapper(
         offset: 0,
-        limit: 0,
+        limit: apiLimitPerQuery,
         total: 0,
         count: 0,
         results: [],
@@ -120,7 +121,7 @@ class MarvelCharacterRepository implements CharacterDataSource {
     if (data == null || data.results.isEmpty) {
       return SerieWrapper(
         offset: 0,
-        limit: 0,
+        limit: apiLimitPerQuery,
         total: 0,
         count: 0,
         results: [],
@@ -152,7 +153,7 @@ class MarvelCharacterRepository implements CharacterDataSource {
     if (data == null || data.results.isEmpty) {
       return StoryWrapper(
         offset: 0,
-        limit: 0,
+        limit: apiLimitPerQuery,
         total: 0,
         count: 0,
         results: [],
@@ -182,7 +183,7 @@ class MarvelCharacterRepository implements CharacterDataSource {
     final hash = md5.convert(utf8.encode(timestamp + privateKey + publicKey));
 
     var getUrl = '$baseUrl/$url?ts=$timestamp'
-        '&apikey=$publicKey&hash=$hash';
+        '&apikey=$publicKey&hash=$hash&limit=$apiLimitPerQuery';
 
     if (offset > 0) getUrl += '&offset=$offset';
 
