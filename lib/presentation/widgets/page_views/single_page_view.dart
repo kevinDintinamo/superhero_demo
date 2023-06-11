@@ -92,6 +92,14 @@ class _CustomImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var hasImage = objectWithThumbnail.thumbnail?.fullPath != null;
+
+    if (!hasImage) {
+      return const Center(
+        child: Text('No image'),
+      );
+    }
+
     return Image.network(
       objectWithThumbnail.thumbnail?.fullPath,
       fit: BoxFit.cover,
