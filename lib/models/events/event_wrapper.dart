@@ -1,10 +1,10 @@
 import '../shared/data_wrapper.dart';
 import 'event.dart';
 
-class EventsWrapper extends DataWrapper {
+class EventWrapper extends DataWrapper {
   final List<Event> events;
 
-  EventsWrapper({
+  EventWrapper({
     required int offset,
     required int limit,
     required int total,
