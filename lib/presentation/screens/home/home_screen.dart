@@ -3,7 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
-import '../../../data/data_sources/character_data_source.dart';
+// import '../../../data/data_sources/character_data_source.dart';
+import '../../../models/characters/characters.dart';
 import '../../providers/providers.dart';
 import '../../widgets/widgets.dart';
 import '../screens.dart';
@@ -25,6 +26,7 @@ class HomeScreen extends ConsumerWidget {
       body: const SafeArea(child: _HomeView()),
       bottomNavigationBar: BottomPageNavigationBar(
         dataProvider: characterDataProvider,
+        offsetProvider: charactersOffsetProvider,
       ),
     );
   }
@@ -48,22 +50,14 @@ class _HomeView extends ConsumerWidget {
         final characters = data.characters;
         return ListView(
           children: [
-            const SizedBox(height: 20),
-
             // Photo Views.
             SizedBox(
-                height: 300,
+                height: 320,
                 width: double.infinity,
                 child: SinglePageView(
                   objectListWithThumbnails: characters,
+                  subPageProvider: characterSubPageIndexProvider,
                 )),
-
-            const SizedBox(height: 4.0),
-            Text(
-              '${subPageIndex + 1}/${characters.length}',
-              style: theme.textTheme.labelSmall,
-              textAlign: TextAlign.center,
-            ),
 
             _DetailedInfoWidget(
                 characters: characters,
@@ -83,7 +77,7 @@ class _DetailedInfoWidget extends StatelessWidget {
     required this.theme,
   });
 
-  final List<Character> characters;
+  final List characters;
   final int subPageIndex;
   final ThemeData theme;
 
@@ -124,12 +118,12 @@ class _DetailedInfoWidget extends StatelessWidget {
   }
 }
 
-class _MoreInfoActionWidgets extends StatelessWidget {
+class _MoreInfoActionWidgets extends ConsumerWidget {
   final Character character;
   const _MoreInfoActionWidgets(this.character);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     final seriesCount = character.seriesAvailableCount;
     final comicsCount = character.comicsAvailableCount;
     final storiesCount = character.storiesAvailableCount;
@@ -149,15 +143,26 @@ class _MoreInfoActionWidgets extends StatelessWidget {
         TonalButton(
           text: 'Comics ($comicsCount)',
           iconData: Icons.book,
-          onPresed: comicsCount == 0 ? null : () {},
+          onPresed: comicsCount == 0
+              ? null
+              : () {
+                  ref
+                      .read(characterSelectedIdProvider.notifier)
+                      .update((state) => character.id);
+                  context.pushNamed(ComicScreen.screenName);
+                },
         ),
         TonalButton(
-          text: 'Stories ($storiesCount)',
-          iconData: Icons.battery_6_bar_sharp,
-          onPresed: storiesCount == 0
-              ? null
-              : () => context.pushNamed(StoriesScreen.screenName),
-        ),
+            text: 'Stories ($storiesCount)',
+            iconData: Icons.battery_6_bar_sharp,
+            onPresed: storiesCount == 0
+                ? null
+                : () {
+                    ref
+                        .read(characterSelectedIdProvider.notifier)
+                        .update((state) => character.id);
+                    context.pushNamed(StoriesScreen.screenName);
+                  }),
         TonalButton(
           text: 'Events ($eventsCount)',
           iconData: Icons.event,
