@@ -47,39 +47,116 @@ class MarvelCharacterRepository implements CharacterDataSource {
   }
 
   @override
-  Future<List<Comic>> getComics(int characterId) async {
+  Future<ComicWrapper> getComics(int characterId) async {
     final data = await _getDataFromApi(url: 'characters/$characterId/comics');
-    if (data == null || data.results.isEmpty) return [];
+
+    if (data == null || data.results.isEmpty) {
+      return ComicWrapper(
+        offset: 0,
+        limit: 0,
+        total: 0,
+        count: 0,
+        results: [],
+        comics: [],
+      );
+    }
 
     final comicList = data.results.map((e) => Comic.fromJson(e)).toList();
-    return comicList;
+
+    final comicWrapper = ComicWrapper(
+      offset: data.offset,
+      limit: data.limit,
+      total: data.total,
+      count: data.count,
+      results: data.results,
+      comics: comicList,
+    );
+
+    return comicWrapper;
   }
 
   @override
-  Future<List<Event>> getEvents(int characterId) async {
+  Future<EventWrapper> getEvents(int characterId) async {
     final data = await _getDataFromApi(url: 'characters/$characterId/events');
-    if (data == null || data.results.isEmpty) return [];
+    if (data == null || data.results.isEmpty) {
+      return EventWrapper(
+        offset: 0,
+        limit: 0,
+        total: 0,
+        count: 0,
+        results: [],
+        events: [],
+      );
+    }
 
     final eventList = data.results.map((e) => Event.fromJson(e)).toList();
-    return eventList;
+
+    final eventWrapper = EventWrapper(
+      offset: data.offset,
+      limit: data.limit,
+      total: data.total,
+      count: data.count,
+      results: data.results,
+      events: eventList,
+    );
+
+    return eventWrapper;
   }
 
   @override
-  Future<List<Serie>> getSeries(int characterId) async {
+  Future<SerieWrapper> getSeries(int characterId) async {
     final data = await _getDataFromApi(url: 'characters/$characterId/series');
-    if (data == null || data.results.isEmpty) return [];
+    if (data == null || data.results.isEmpty) {
+      return SerieWrapper(
+        offset: 0,
+        limit: 0,
+        total: 0,
+        count: 0,
+        results: [],
+        series: [],
+      );
+    }
 
     final serieList = data.results.map((e) => Serie.fromJson(e)).toList();
-    return serieList;
+
+    final serieWrapper = SerieWrapper(
+      offset: data.offset,
+      limit: data.limit,
+      total: data.total,
+      count: data.count,
+      results: data.results,
+      series: serieList,
+    );
+
+    return serieWrapper;
   }
 
   @override
-  Future<List<Story>> getStories(int characterId) async {
+  Future<StoryWrapper> getStories(int characterId) async {
     final data = await _getDataFromApi(url: 'characters/$characterId/stories');
-    if (data == null || data.results.isEmpty) return [];
+    if (data == null || data.results.isEmpty) {
+      return StoryWrapper(
+        offset: 0,
+        limit: 0,
+        total: 0,
+        count: 0,
+        results: [],
+        stories: [],
+      );
+    }
 
     final storyList = data.results.map((e) => Story.fromJson(e)).toList();
-    return storyList;
+
+    final storyWrapper = StoryWrapper(
+      offset: data.offset,
+      limit: data.limit,
+      total: data.total,
+      count: data.count,
+      results: data.results,
+      stories: storyList,
+    );
+
+    return storyWrapper;
   }
 
   Future<DataWrapper?> _getDataFromApi(

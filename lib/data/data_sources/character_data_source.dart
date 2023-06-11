@@ -1,14 +1,14 @@
 import '/models/characters/characters.dart';
-import '../../models/events/event.dart';
-import '../../models/stories/story.dart';
-import '../../models/comics/comic.dart';
-import '../../models/series/serie.dart';
+import '/models/events/events.dart';
+import '/models/comics/comics.dart';
+import '/models/series/series.dart';
+import '/models/stories/stories.dart';
 
 export '/models/characters/characters.dart';
-export '../../models/events/event.dart';
-export '../../models/stories/story.dart';
-export '../../models/comics/comic.dart';
-export '../../models/series/serie.dart';
+export '/models/events/events.dart';
+export '/models/comics/comics.dart';
+export '/models/series/series.dart';
+export '/models/stories/stories.dart';
 
 abstract class CharacterDataSource {
   String baseUrl;
@@ -19,19 +19,19 @@ abstract class CharacterDataSource {
     throw UnimplementedError();
   }
 
-  Future<List<Comic>> getComics(int characterId) async {
+  Future<ComicWrapper> getComics(int characterId) async {
     throw UnimplementedError();
   }
 
-  Future<List<Event>> getEvents(int characterId) async {
+  Future<EventWrapper> getEvents(int characterId) async {
     throw UnimplementedError();
   }
 
-  Future<List<Serie>> getSeries(int characterId) async {
+  Future<SerieWrapper> getSeries(int characterId) async {
     throw UnimplementedError();
   }
 
-  Future<List<Story>> getStories(int characterId) async {
+  Future<StoryWrapper> getStories(int characterId) async {
     throw UnimplementedError();
   }
 }
