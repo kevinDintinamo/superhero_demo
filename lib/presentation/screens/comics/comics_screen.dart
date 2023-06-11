@@ -5,10 +5,10 @@ import '../../../utils/utils.dart';
 import '../../providers/providers.dart';
 import '../../widgets/widgets.dart';
 
-class ComicScreen extends StatelessWidget {
+class ComicsScreen extends StatelessWidget {
   static const screenName = 'comic_screen';
 
-  const ComicScreen({super.key});
+  const ComicsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class ComicScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: appBar,
-      body: const SafeArea(child: _ComicView()),
+      body: const SafeArea(child: _ComicsView()),
       bottomNavigationBar: BottomPageNavigationBar(
         dataProvider: comicDataProvider,
         offsetProvider: comicsOffsetProvider,
@@ -28,8 +28,8 @@ class ComicScreen extends StatelessWidget {
   }
 }
 
-class _ComicView extends ConsumerWidget {
-  const _ComicView();
+class _ComicsView extends ConsumerWidget {
+  const _ComicsView();
 
   @override
   Widget build(BuildContext context, ref) {
