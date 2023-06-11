@@ -27,18 +27,11 @@ class StoriesScreen extends StatelessWidget {
       ),
     );
 
-    final bottomPageNavigationBar = BottomPageNavigationBar(
-      leftText: '3',
-      centerText: '4 / 8',
-      rightText: '5',
-      onLeftPressed: () {},
-      onRightPressed: () {},
-    );
-
     return Scaffold(
       appBar: appBar,
       body: const SafeArea(child: _StroriesView()),
-      bottomNavigationBar: bottomPageNavigationBar,
+      //TODO: Implement BottomNavigationBar.
+      // bottomNavigationBar: BottomNavigationBar(),
     );
   }
 }
@@ -57,7 +50,7 @@ class _StroriesView extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           height: 300,
-          child: SinglePageView(controller: controller),
+          child: SinglePageView(objectListWithThumbnails: []),
         ),
         Padding(
           padding: const EdgeInsets.all(36.0),

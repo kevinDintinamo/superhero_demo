@@ -1,91 +1,136 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../../data/data_sources/character_data_source.dart';
+import '../../providers/providers.dart';
+import '../../widgets/widgets.dart';
 import '../screens.dart';
 
-import '../../widgets/widgets.dart';
-
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   static const screenName = 'home_screen';
-  const HomeScreen({Key? key}) : super(key: key);
+
+  const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     final appBar = AppBar(
       centerTitle: true,
-      title: const Text('Marvel Super Heroes'),
-    );
-
-    final bottomPageNavigationBar = BottomPageNavigationBar(
-      leftText: '1',
-      centerText: '2 / 95',
-      rightText: '3',
-      onLeftPressed: () {},
-      onRightPressed: () {},
+      title: const Text('Marvel Characters'),
     );
 
     return Scaffold(
       appBar: appBar,
       body: const SafeArea(child: _HomeView()),
-      bottomNavigationBar: bottomPageNavigationBar,
+      bottomNavigationBar: BottomPageNavigationBar(
+        dataProvider: characterDataProvider,
+      ),
     );
   }
 }
 
-class _HomeView extends StatelessWidget {
+class _HomeView extends ConsumerWidget {
   const _HomeView();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
+    final characterData = ref.watch(characterDataProvider);
+
     final theme = Theme.of(context);
 
-    final controller = PageController(viewportFraction: 0.85);
+    final subPageIndex = ref.watch(characterSubPageIndexProvider);
 
-    return ListView(
-      children: [
-        const SizedBox(height: 20),
-        SizedBox(
-          width: double.infinity,
-          height: 350,
-          child: SinglePageView(controller: controller),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(36.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'SuperHero Name',
-                style: theme.textTheme.titleMedium,
-                textAlign: TextAlign.start,
-              ),
-              Text(
-                // 'Desc.',
-                'Description ofVeniam nulla reprehenderit adipisicing non enim magna ad cillum proident.',
-                style: theme.textTheme.bodyMedium,
-                textAlign: TextAlign.start,
-              ),
-              const SizedBox(height: 8.0),
-              Text(
-                'Fecha de modificación: {2022-02-02}',
-                style: theme.textTheme.bodySmall,
-                textAlign: TextAlign.start,
-              ),
-              const SizedBox(height: 24.0),
-              const _MoreInfoActionWidgets(),
-              const SizedBox(height: 24.0),
-            ],
+    return characterData.when(
+      loading: () => const Center(child: Text('Loading...')),
+      error: (e, s) => Text('$e'),
+      data: (data) {
+        final characters = data.characters;
+        return ListView(
+          children: [
+            const SizedBox(height: 20),
+
+            // Photo Views.
+            SizedBox(
+                height: 300,
+                width: double.infinity,
+                child: SinglePageView(
+                  objectListWithThumbnails: characters,
+                )),
+
+            const SizedBox(height: 4.0),
+            Text(
+              '${subPageIndex + 1}/${characters.length}',
+              style: theme.textTheme.labelSmall,
+              textAlign: TextAlign.center,
+            ),
+
+            _DetailedInfoWidget(
+                characters: characters,
+                subPageIndex: subPageIndex,
+                theme: theme),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class _DetailedInfoWidget extends StatelessWidget {
+  const _DetailedInfoWidget({
+    required this.characters,
+    required this.subPageIndex,
+    required this.theme,
+  });
+
+  final List<Character> characters;
+  final int subPageIndex;
+  final ThemeData theme;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(36.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Title.
+          Text(
+            characters[subPageIndex].name,
+            style: theme.textTheme.titleMedium,
+            textAlign: TextAlign.start,
           ),
-        ),
-      ],
+          // Description.
+          Text(
+            characters[subPageIndex].description,
+            style: theme.textTheme.bodyMedium,
+            textAlign: TextAlign.start,
+          ),
+          const SizedBox(height: 8.0),
+          Text(
+            'Modified Date: ${characters[subPageIndex].modifiedDate}',
+            style: theme.textTheme.bodySmall,
+            textAlign: TextAlign.start,
+          ),
+          const SizedBox(height: 24.0),
+          _MoreInfoActionWidgets(characters[subPageIndex]),
+          const SizedBox(height: 24.0),
+        ],
+      ),
     );
   }
 }
 
 class _MoreInfoActionWidgets extends StatelessWidget {
-  const _MoreInfoActionWidgets();
+  final Character character;
+  const _MoreInfoActionWidgets(this.character);
 
   @override
   Widget build(BuildContext context) {
+    final seriesCount = character.seriesAvailableCount;
+    final comicsCount = character.comicsAvailableCount;
+    final storiesCount = character.storiesAvailableCount;
+    final eventsCount = character.eventsAvailableCount;
+
     return Wrap(
       alignment: WrapAlignment.center,
       crossAxisAlignment: WrapCrossAlignment.center,
@@ -93,24 +138,26 @@ class _MoreInfoActionWidgets extends StatelessWidget {
       runAlignment: WrapAlignment.center,
       children: [
         TonalButton(
-          text: 'Series (4)',
+          text: 'Series ($seriesCount)',
           iconData: Icons.ac_unit,
-          onPresed: () {},
+          onPresed: seriesCount == 0 ? null : () {},
         ),
         TonalButton(
-          text: 'Comics (4)',
+          text: 'Comics ($comicsCount)',
           iconData: Icons.book,
-          onPresed: () {},
+          onPresed: comicsCount == 0 ? null : () {},
         ),
         TonalButton(
-          text: 'Stories (3)',
+          text: 'Stories ($storiesCount)',
           iconData: Icons.battery_6_bar_sharp,
-          onPresed: () => context.pushNamed(StoriesScreen.screenName),
+          onPresed: storiesCount == 0
+              ? null
+              : () => context.pushNamed(StoriesScreen.screenName),
         ),
         TonalButton(
-          text: 'Events (0)',
+          text: 'Events ($eventsCount)',
           iconData: Icons.event,
-          onPresed: () {},
+          onPresed: eventsCount == 0 ? null : () {},
         ),
       ],
     );
