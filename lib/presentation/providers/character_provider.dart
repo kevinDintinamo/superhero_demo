@@ -9,12 +9,12 @@ final characterDataProvider = FutureProvider<CharacterWrapper>((ref) async {
 
   final dataSource = ref.watch(dataSourceProvider);
 
-  final dataSou = await dataSource.getCharacters(offset: characterOffset);
+  final wrapper = await dataSource.getCharacters(offset: characterOffset);
 
   /// Reset the subpage index to 0 when the page changes.
   ref.read(characterSubPageIndexProvider.notifier).update((_) => 0);
 
-  return dataSou;
+  return wrapper;
 });
 
 /// Value of the page (offset) im in the list of characters pagination.
@@ -24,5 +24,9 @@ final charactersOffsetProvider = StateProvider<int>((ref) {
 
 /// Index of the Result in Wrapper List.
 final characterSubPageIndexProvider = StateProvider<int>((ref) {
+  return 0;
+});
+
+final characterSelectedIdProvider = StateProvider<int>((ref) {
   return 0;
 });
