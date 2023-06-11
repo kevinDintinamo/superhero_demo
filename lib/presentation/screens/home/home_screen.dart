@@ -76,12 +76,16 @@ class _DetailedInfoWidget extends StatelessWidget {
     required this.theme,
   });
 
-  final List characters;
+  final List<Character> characters;
   final int subPageIndex;
   final ThemeData theme;
 
   @override
   Widget build(BuildContext context) {
+    if (characters.isEmpty) {
+      return const Text('No Data to Show');
+    }
+
     final modifiedDate =
         Utils.getDateFormatted(characters[subPageIndex].modifiedDate);
 
@@ -128,60 +132,64 @@ class _MoreInfoActionWidgets extends ConsumerWidget {
     final storiesCount = character.storiesAvailableCount;
     final eventsCount = character.eventsAvailableCount;
 
-    return Wrap(
-      alignment: WrapAlignment.center,
-      crossAxisAlignment: WrapCrossAlignment.center,
-      spacing: 8.0,
-      runAlignment: WrapAlignment.center,
-      children: [
-        TonalButton(
-          text: 'Series ($seriesCount)',
-          iconData: Icons.ac_unit,
-          onPresed: seriesCount == 0
-              ? null
-              : () {
-                  ref
-                      .read(characterSelectedIdProvider.notifier)
-                      .update((state) => character.id);
-                  context.pushNamed(SeriesScreen.screenName);
-                },
-        ),
-        TonalButton(
-          text: 'Comics ($comicsCount)',
-          iconData: Icons.book,
-          onPresed: comicsCount == 0
-              ? null
-              : () {
-                  ref
-                      .read(characterSelectedIdProvider.notifier)
-                      .update((state) => character.id);
-                  context.pushNamed(ComicsScreen.screenName);
-                },
-        ),
-        TonalButton(
-            text: 'Stories ($storiesCount)',
-            iconData: Icons.battery_6_bar_sharp,
-            onPresed: storiesCount == 0
+    // Center Here to improve design consistents on web.
+    return Center(
+      child: Wrap(
+        alignment: WrapAlignment.center,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        spacing: 8.0,
+        runSpacing: 8.0,
+        runAlignment: WrapAlignment.center,
+        children: [
+          TonalButton(
+            text: 'Series ($seriesCount)',
+            iconData: Icons.ac_unit,
+            onPresed: seriesCount == 0
                 ? null
                 : () {
                     ref
                         .read(characterSelectedIdProvider.notifier)
                         .update((state) => character.id);
-                    context.pushNamed(StoriesScreen.screenName);
-                  }),
-        TonalButton(
-          text: 'Events ($eventsCount)',
-          iconData: Icons.event,
-          onPresed: eventsCount == 0
-              ? null
-              : () {
-                  ref
-                      .read(characterSelectedIdProvider.notifier)
-                      .update((state) => character.id);
-                  context.pushNamed(EventsScreen.screenName);
-                },
-        ),
-      ],
+                    context.pushNamed(SeriesScreen.screenName);
+                  },
+          ),
+          TonalButton(
+            text: 'Comics ($comicsCount)',
+            iconData: Icons.book,
+            onPresed: comicsCount == 0
+                ? null
+                : () {
+                    ref
+                        .read(characterSelectedIdProvider.notifier)
+                        .update((state) => character.id);
+                    context.pushNamed(ComicsScreen.screenName);
+                  },
+          ),
+          TonalButton(
+              text: 'Stories ($storiesCount)',
+              iconData: Icons.battery_6_bar_sharp,
+              onPresed: storiesCount == 0
+                  ? null
+                  : () {
+                      ref
+                          .read(characterSelectedIdProvider.notifier)
+                          .update((state) => character.id);
+                      context.pushNamed(StoriesScreen.screenName);
+                    }),
+          TonalButton(
+            text: 'Events ($eventsCount)',
+            iconData: Icons.event,
+            onPresed: eventsCount == 0
+                ? null
+                : () {
+                    ref
+                        .read(characterSelectedIdProvider.notifier)
+                        .update((state) => character.id);
+                    context.pushNamed(EventsScreen.screenName);
+                  },
+          ),
+        ],
+      ),
     );
   }
 }
