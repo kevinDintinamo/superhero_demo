@@ -17,18 +17,36 @@ class MarvelCharacterRepository implements CharacterDataSource {
   });
 
   @override
-  Future<List<Character>> getCharacters() async {
-    var data = await _getDataFromApi();
-    if (data == null || data.results.isEmpty) return [];
+  Future<CharacterWrapper> getCharacters({int offset = 0}) async {
+    var data = await _getDataFromApi(offset: offset);
 
-    var characterList = data.results.map((e) => Character.fromJson(e)).toList();
+    if (data == null || data.results.isEmpty) {
+      return CharacterWrapper(
+        offset: 0,
+        limit: 0,
+        total: 0,
+        count: 0,
+        characters: [],
+      );
+    }
 
-    return characterList;
+    final characterList =
+        data.results.map((e) => Character.fromJson(e)).toList();
+
+    final characterWrapper = CharacterWrapper(
+      offset: data.offset,
+      limit: data.limit,
+      total: data.total,
+      count: data.count,
+      characters: characterList,
+    );
+
+    return characterWrapper;
   }
 
   @override
   Future<List<Comic>> getComics(int characterId) async {
-    final data = await _getDataFromApi('characters/$characterId/comics');
+    final data = await _getDataFromApi(url: 'characters/$characterId/comics');
     if (data == null || data.results.isEmpty) return [];
 
     final comicList = data.results.map((e) => Comic.fromJson(e)).toList();
@@ -37,7 +55,7 @@ class MarvelCharacterRepository implements CharacterDataSource {
 
   @override
   Future<List<Event>> getEvents(int characterId) async {
-    final data = await _getDataFromApi('characters/$characterId/events');
+    final data = await _getDataFromApi(url: 'characters/$characterId/events');
     if (data == null || data.results.isEmpty) return [];
 
     final eventList = data.results.map((e) => Event.fromJson(e)).toList();
@@ -46,7 +64,7 @@ class MarvelCharacterRepository implements CharacterDataSource {
 
   @override
   Future<List<Serie>> getSeries(int characterId) async {
-    final data = await _getDataFromApi('characters/$characterId/series');
+    final data = await _getDataFromApi(url: 'characters/$characterId/series');
     if (data == null || data.results.isEmpty) return [];
 
     final serieList = data.results.map((e) => Serie.fromJson(e)).toList();
@@ -55,25 +73,29 @@ class MarvelCharacterRepository implements CharacterDataSource {
 
   @override
   Future<List<Story>> getStories(int characterId) async {
-    final data = await _getDataFromApi('characters/$characterId/stories');
+    final data = await _getDataFromApi(url: 'characters/$characterId/stories');
     if (data == null || data.results.isEmpty) return [];
 
     final storyList = data.results.map((e) => Story.fromJson(e)).toList();
     return storyList;
   }
 
-  Future<DataWrapper?> _getDataFromApi([String url = 'characters']) async {
+  Future<DataWrapper?> _getDataFromApi(
+      {String url = 'characters', int offset = 0}) async {
     final publicKey = Environment.marvelPublicKey;
     final privateKey = Environment.marvelPrivateKey;
     final timestamp = DateTime.now().millisecondsSinceEpoch.toString();
     final hash = md5.convert(utf8.encode(timestamp + privateKey + publicKey));
 
-    final getUrl = '$baseUrl/$url?ts=$timestamp'
+    var getUrl = '$baseUrl/$url?ts=$timestamp'
         '&apikey=$publicKey&hash=$hash';
+
+    if (offset > 0) getUrl += '&offset=$offset';
 
     try {
       final response = await http.get(Uri.parse(getUrl));
       final decodedData = json.decode(response.body)["data"];
+
       final data = DataWrapper.fromJson(decodedData);
 
       return data;
