@@ -165,7 +165,14 @@ class _MoreInfoActionWidgets extends ConsumerWidget {
         TonalButton(
           text: 'Events ($eventsCount)',
           iconData: Icons.event,
-          onPresed: eventsCount == 0 ? null : () {},
+          onPresed: eventsCount == 0
+              ? null
+              : () {
+                  ref
+                      .read(characterSelectedIdProvider.notifier)
+                      .update((state) => character.id);
+                  context.pushNamed(EventsScreen.screenName);
+                },
         ),
       ],
     );
