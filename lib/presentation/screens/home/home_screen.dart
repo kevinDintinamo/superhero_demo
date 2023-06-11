@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 import '../../../data/data_sources/character_data_source.dart';
 import '../../providers/providers.dart';
@@ -88,6 +89,9 @@ class _DetailedInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dateTime = DateTime.parse(characters[subPageIndex].modifiedDate);
+    final modifiedDate = DateFormat('dd/MM/yyyy').format(dateTime);
+
     return Padding(
       padding: const EdgeInsets.all(36.0),
       child: Column(
@@ -107,7 +111,7 @@ class _DetailedInfoWidget extends StatelessWidget {
           ),
           const SizedBox(height: 8.0),
           Text(
-            'Modified Date: ${characters[subPageIndex].modifiedDate}',
+            'Modified Date: $modifiedDate',
             style: theme.textTheme.bodySmall,
             textAlign: TextAlign.start,
           ),
