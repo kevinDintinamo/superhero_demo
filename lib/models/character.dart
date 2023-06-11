@@ -37,7 +37,7 @@ class Character {
       name: json['name'] ?? '',
       description: json['description'] ?? '',
       modifiedDate: json['modified'] ?? '',
-      thumbnail: imagePathFromJson(json['thumbnail']),
+      thumbnail: imagePathFromJsonMap(json['thumbnail']),
       comicsAvailableCount: json['comics']['available'],
       storiesAvailableCount: json['stories']['available'],
       eventsAvailableCount: json['events']['available'],
