@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '/config/router/app_router.dart';
 import '/config/theme/app_theme.dart';
+import 'utils/app_scroll_behavior.dart';
 
 void main() async {
   // Environment variables are loaded from .env file.
@@ -22,9 +23,10 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
       routerConfig: appRouter,
       theme: AppTheme().getTheme(),
+      debugShowCheckedModeBanner: false,
+      scrollBehavior: AppScrollBehavior(),
     );
   }
 }
