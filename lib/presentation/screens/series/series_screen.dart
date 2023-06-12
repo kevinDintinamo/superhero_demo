@@ -84,53 +84,49 @@ class _DetailedInfoWidget extends ConsumerWidget {
     var description = series[subPageIndex].description;
     if (description.isEmpty) description = 'No Description Available';
 
-    return Padding(
-      padding: const EdgeInsets.all(36.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Title.
-          Text(
-            series[subPageIndex].title,
-            style: theme.textTheme.titleMedium,
-            textAlign: TextAlign.start,
-          ),
+    return DetailsContainer(
+      children: [
+        // Title.
+        Text(
+          series[subPageIndex].title,
+          style: theme.textTheme.titleMedium,
+          textAlign: TextAlign.start,
+        ),
 
-          const SizedBox(height: 4.0),
-          // Start Date.
-          Text(
-            'Start year: $startDate',
-            style: theme.textTheme.bodyMedium
-                ?.copyWith(fontWeight: FontWeight.bold),
-            textAlign: TextAlign.start,
-          ),
+        const SizedBox(height: 4.0),
+        // Start Date.
+        Text(
+          'Start year: $startDate',
+          style:
+              theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
+          textAlign: TextAlign.start,
+        ),
 
-          // End Date.
-          Text(
-            'End year:   $endDate',
-            style: theme.textTheme.bodyMedium
-                ?.copyWith(fontWeight: FontWeight.bold),
-            textAlign: TextAlign.start,
-          ),
-          const SizedBox(height: 8.0),
+        // End Date.
+        Text(
+          'End year:   $endDate',
+          style:
+              theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
+          textAlign: TextAlign.start,
+        ),
+        const SizedBox(height: 8.0),
 
-          // Description.
-          Text(
-            description,
-            style: theme.textTheme.bodyMedium,
-            textAlign: TextAlign.start,
-          ),
-          const SizedBox(height: 8.0),
+        // Description.
+        Text(
+          description,
+          style: theme.textTheme.bodyMedium,
+          textAlign: TextAlign.start,
+        ),
+        const SizedBox(height: 8.0),
 
-          // Modified Date.
-          Text(
-            'Modified Date: $modifiedDate',
-            style: theme.textTheme.bodySmall,
-            textAlign: TextAlign.start,
-          ),
-          const SizedBox(height: 24.0),
-        ],
-      ),
+        // Modified Date.
+        Text(
+          'Modified Date: $modifiedDate',
+          style: theme.textTheme.bodySmall,
+          textAlign: TextAlign.start,
+        ),
+        const SizedBox(height: 24.0),
+      ],
     );
   }
 }

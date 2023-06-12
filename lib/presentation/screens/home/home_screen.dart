@@ -97,34 +97,33 @@ class _DetailedInfoWidget extends StatelessWidget {
     var description = characters[subPageIndex].description;
     if (description.isEmpty) description = 'No Description Available';
 
-    return Padding(
-      padding: const EdgeInsets.all(36.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Title.
-          Text(
-            characters[subPageIndex].name,
-            style: theme.textTheme.titleMedium?.copyWith(color: Colors.black),
-            textAlign: TextAlign.start,
-          ),
-          // Description.
-          Text(
-            description,
-            style: theme.textTheme.bodyMedium,
-            textAlign: TextAlign.start,
-          ),
-          const SizedBox(height: 8.0),
-          Text(
-            'Modified Date: $modifiedDate',
-            style: theme.textTheme.bodySmall,
-            textAlign: TextAlign.start,
-          ),
-          const SizedBox(height: 24.0),
-          _MoreInfoActionWidgets(characters[subPageIndex]),
-          const SizedBox(height: 24.0),
-        ],
-      ),
+    return DetailsContainer(
+      children: [
+        // Title.
+        Text(
+          characters[subPageIndex].name,
+          style: theme.textTheme.titleMedium?.copyWith(color: Colors.black),
+          textAlign: TextAlign.start,
+        ),
+
+        // Description.
+        Text(
+          description,
+          style: theme.textTheme.bodyMedium,
+          textAlign: TextAlign.start,
+        ),
+
+        const SizedBox(height: 8.0),
+        Text(
+          'Modified Date: $modifiedDate',
+          style: theme.textTheme.bodySmall,
+          textAlign: TextAlign.start,
+        ),
+
+        const SizedBox(height: 24.0),
+        _MoreInfoActionWidgets(characters[subPageIndex]),
+        const SizedBox(height: 24.0),
+      ],
     );
   }
 }
@@ -152,6 +151,7 @@ class _MoreInfoActionWidgets extends ConsumerWidget {
           TonalButton(
             text: 'Series ($seriesCount)',
             iconData: Icons.collections_bookmark_outlined,
+            millisecondsDelay: 0,
             onPressed: seriesCount == 0
                 ? null
                 : () => _onPressed(context, ref, SeriesScreen.screenName),
@@ -159,6 +159,7 @@ class _MoreInfoActionWidgets extends ConsumerWidget {
           TonalButton(
             text: 'Comics ($comicsCount)',
             iconData: Icons.menu_book_outlined,
+            millisecondsDelay: 100,
             onPressed: comicsCount == 0
                 ? null
                 : () => _onPressed(context, ref, ComicsScreen.screenName),
@@ -166,6 +167,7 @@ class _MoreInfoActionWidgets extends ConsumerWidget {
           TonalButton(
             text: 'Stories ($storiesCount)',
             iconData: Icons.bookmark_add_outlined,
+            millisecondsDelay: 200,
             onPressed: storiesCount == 0
                 ? null
                 : () => _onPressed(context, ref, StoriesScreen.screenName),
@@ -173,6 +175,7 @@ class _MoreInfoActionWidgets extends ConsumerWidget {
           TonalButton(
             text: 'Events ($eventsCount)',
             iconData: Icons.playlist_add_check_circle_outlined,
+            millisecondsDelay: 300,
             onPressed: eventsCount == 0
                 ? null
                 : () => _onPressed(context, ref, EventsScreen.screenName),

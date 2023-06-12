@@ -1,7 +1,9 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:superhero_demo/models/shared/price.dart';
 
+import '../../../config/constants/constants.dart';
 import '../../../models/comics/comics.dart';
 import '../../../utils/utils.dart';
 import '../../providers/providers.dart';
@@ -84,49 +86,45 @@ class _DetailedInfoWidget extends ConsumerWidget {
     var description = comics[subPageIndex].description;
     if (description.isEmpty) description = 'No Description Available';
 
-    return Padding(
-      padding: const EdgeInsets.all(36.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Title.
-          Text(
-            comics[subPageIndex].title,
-            style: theme.textTheme.titleMedium,
-            textAlign: TextAlign.start,
-          ),
+    return DetailsContainer(
+      children: [
+        // Title.
+        Text(
+          comics[subPageIndex].title,
+          style: theme.textTheme.titleMedium,
+          textAlign: TextAlign.start,
+        ),
 
-          const SizedBox(height: 4.0),
+        const SizedBox(height: 4.0),
 
-          Text(
-            'PageCount: ${comics[subPageIndex].pageCount}',
-            style: theme.textTheme.bodyMedium
-                ?.copyWith(fontWeight: FontWeight.bold),
-            textAlign: TextAlign.start,
-          ),
+        Text(
+          'PageCount: ${comics[subPageIndex].pageCount}',
+          style:
+              theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
+          textAlign: TextAlign.start,
+        ),
 
-          // Modified Date.
-          Text(
-            'Modified Date: $modifiedDate',
-            style: theme.textTheme.bodySmall,
-            textAlign: TextAlign.start,
-          ),
-          // Description.
-          const SizedBox(height: 8.0),
+        // Modified Date.
+        Text(
+          'Modified Date: $modifiedDate',
+          style: theme.textTheme.bodySmall,
+          textAlign: TextAlign.start,
+        ),
+        // Description.
+        const SizedBox(height: 8.0),
 
-          Text(
-            description,
-            style: theme.textTheme.bodyMedium,
-            textAlign: TextAlign.start,
-          ),
-          const SizedBox(height: 8.0),
+        Text(
+          description,
+          style: theme.textTheme.bodyMedium,
+          textAlign: TextAlign.start,
+        ),
+        const SizedBox(height: 8.0),
 
-          const SizedBox(height: 16.0),
-          // Prices.
-          _PricesWidget(prices: prices, theme: theme),
-          const SizedBox(height: 24.0),
-        ],
-      ),
+        const SizedBox(height: 16.0),
+        // Prices.
+        _PricesWidget(prices: prices, theme: theme),
+        const SizedBox(height: 24.0),
+      ],
     );
   }
 }
