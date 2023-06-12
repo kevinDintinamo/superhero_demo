@@ -116,16 +116,18 @@ class _BottomPageNavigationBar extends ConsumerWidget {
                   onPressed: onLeftPressed,
                 ),
               ),
-              TextButton(
-                  onPressed: offsetProvider == null
-                      ? null
-                      : () => onCenterBottomPressed(
-                            context,
-                            ref,
-                            offsetProvider!,
-                            maxPagesAvailable!,
-                          ),
-                  child: Text(centerText)),
+              ElasticIn(
+                child: TextButton(
+                    onPressed: offsetProvider == null
+                        ? null
+                        : () => onCenterBottomPressed(
+                              context,
+                              ref,
+                              offsetProvider!,
+                              maxPagesAvailable!,
+                            ),
+                    child: Text(centerText)),
+              ),
               SlideInRight(
                 delay: animationDuration,
                 duration: animationDuration,

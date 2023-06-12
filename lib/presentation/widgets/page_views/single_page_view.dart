@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:superhero_demo/config/constants/constants.dart';
@@ -99,11 +100,14 @@ class _CustomImage extends StatelessWidget {
     final imageName = fullPath.split('/').last.split('.').first;
     final isGenericImage = imageName == 'image_not_available';
 
-    return FadeInImage.assetNetwork(
-      image: fullPath,
-      fit: isGenericImage ? BoxFit.fill : BoxFit.cover,
-      placeholder: defaultAssetImageUrl,
-      imageErrorBuilder: _imageErrorBuilder,
+    return ElasticIn(
+      duration: animationDuration,
+      child: FadeInImage.assetNetwork(
+        image: fullPath,
+        fit: isGenericImage ? BoxFit.fill : BoxFit.cover,
+        placeholder: defaultAssetImageUrl,
+        imageErrorBuilder: _imageErrorBuilder,
+      ),
     );
   }
 

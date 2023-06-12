@@ -1,6 +1,8 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:superhero_demo/config/constants/constants.dart';
 import 'package:superhero_demo/utils/utils.dart';
 
 import '../../../models/characters/characters.dart';
@@ -17,7 +19,10 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     final appBar = AppBar(
       centerTitle: true,
-      title: const Text('Marvel Characters'),
+      title: SlideInDown(
+        duration: animationDuration,
+        child: const Text('Marvel Characters'),
+      ),
     );
 
     return Scaffold(

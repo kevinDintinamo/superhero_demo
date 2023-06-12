@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
 class LoadingWidget extends StatelessWidget {
@@ -14,14 +15,16 @@ class LoadingWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: const [
-            Text(
-              ' Loading...',
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.black54),
+          children: [
+            ElasticIn(
+              child: const Text(
+                ' loading...',
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.black54),
+              ),
             ),
-            SizedBox(height: 8.0),
-            SizedBox(width: 100, child: LinearProgressIndicator()),
+            const SizedBox(height: 8.0),
+            const SizedBox(width: 100, child: LinearProgressIndicator()),
           ],
         ),
       ),
