@@ -172,7 +172,7 @@ class _PricesWidget extends StatelessWidget {
                     ),
                   ),
                   IntrinsicWidth(
-                    child: Text('${prices[index].type}'),
+                    child: Text(prices[index].type),
                   )
                 ],
               ),
