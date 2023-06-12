@@ -15,7 +15,11 @@ class LoadingWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: const [
-            Text('Loading...', textAlign: TextAlign.center),
+            Text(
+              ' Loading...',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.black54),
+            ),
             SizedBox(height: 8.0),
             SizedBox(width: 100, child: LinearProgressIndicator()),
           ],
