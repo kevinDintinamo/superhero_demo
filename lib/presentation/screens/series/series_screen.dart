@@ -39,7 +39,7 @@ class _SeriesView extends ConsumerWidget {
     final theme = Theme.of(context);
 
     return serieData.when(
-      loading: () => const Center(child: Text('Loading...')),
+      loading: () => const LoadingWidget(),
       error: (e, s) => Text('$e'),
       data: (data) {
         final serie = data.series;

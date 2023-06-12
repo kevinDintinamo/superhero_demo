@@ -40,7 +40,7 @@ class _ComicsView extends ConsumerWidget {
     final theme = Theme.of(context);
 
     return comicData.when(
-      loading: () => const Center(child: Text('Loading...')),
+      loading: () => const LoadingWidget(),
       error: (e, s) => Text('$e'),
       data: (data) {
         final comics = data.comics;

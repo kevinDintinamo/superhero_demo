@@ -43,7 +43,7 @@ class _HomeView extends ConsumerWidget {
     final subPageIndex = ref.watch(characterSubPageIndexProvider);
 
     return characterData.when(
-      loading: () => const Center(child: Text('Loading...')),
+      loading: () => const LoadingWidget(),
       error: (e, s) => Text('$e'),
       data: (data) {
         final characters = data.characters;

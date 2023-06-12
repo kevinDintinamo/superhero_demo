@@ -39,7 +39,7 @@ class _StoriesView extends ConsumerWidget {
     final theme = Theme.of(context);
 
     return storyData.when(
-      loading: () => const Center(child: Text('Loading...')),
+      loading: () => const LoadingWidget(),
       error: (e, s) => Text('$e'),
       data: (data) {
         final stories = data.stories;
