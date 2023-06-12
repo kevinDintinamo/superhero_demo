@@ -146,50 +146,39 @@ class _MoreInfoActionWidgets extends ConsumerWidget {
             iconData: Icons.ac_unit,
             onPressed: seriesCount == 0
                 ? null
-                : () {
-                    ref
-                        .read(characterSelectedIdProvider.notifier)
-                        .update((state) => character.id);
-                    context.pushNamed(SeriesScreen.screenName);
-                  },
+                : () => _onPressed(context, ref, SeriesScreen.screenName),
           ),
           TonalButton(
             text: 'Comics ($comicsCount)',
             iconData: Icons.book,
             onPressed: comicsCount == 0
                 ? null
-                : () {
-                    ref
-                        .read(characterSelectedIdProvider.notifier)
-                        .update((state) => character.id);
-                    context.pushNamed(ComicsScreen.screenName);
-                  },
+                : () => _onPressed(context, ref, ComicsScreen.screenName),
           ),
           TonalButton(
-              text: 'Stories ($storiesCount)',
-              iconData: Icons.battery_6_bar_sharp,
-              onPressed: storiesCount == 0
-                  ? null
-                  : () {
-                      ref
-                          .read(characterSelectedIdProvider.notifier)
-                          .update((state) => character.id);
-                      context.pushNamed(StoriesScreen.screenName);
-                    }),
+            text: 'Stories ($storiesCount)',
+            iconData: Icons.battery_6_bar_sharp,
+            onPressed: storiesCount == 0
+                ? null
+                : () => _onPressed(context, ref, StoriesScreen.screenName),
+          ),
           TonalButton(
             text: 'Events ($eventsCount)',
             iconData: Icons.event,
             onPressed: eventsCount == 0
                 ? null
-                : () {
-                    ref
-                        .read(characterSelectedIdProvider.notifier)
-                        .update((state) => character.id);
-                    context.pushNamed(EventsScreen.screenName);
-                  },
+                : () => _onPressed(context, ref, EventsScreen.screenName),
           ),
         ],
       ),
     );
+  }
+
+  _onPressed(BuildContext context, WidgetRef ref, String screenName) {
+    ref
+        .read(characterSelectedIdProvider.notifier)
+        .update((state) => character.id);
+
+    context.pushNamed(screenName);
   }
 }
