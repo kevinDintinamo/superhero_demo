@@ -23,7 +23,7 @@ class BottomPageNavigationBar extends ConsumerWidget {
 
     const loadingButton = _BottomPageNavigationBar(
       leftText: '',
-      centerText: 'loading',
+      centerText: 'loading...',
       rightText: '',
     );
 
@@ -36,17 +36,17 @@ class BottomPageNavigationBar extends ConsumerWidget {
         final limit = dataWrp.limit == 0 ? apiLimitPerQuery : dataWrp.limit;
         final offset = dataWrp.offset;
 
-        final actualPage = (offset / limit).ceil();
+        final int actualPage = (offset / limit).ceil();
 
-        final maxPagesAvailable = (total / limit).ceil();
+        final int maxPagesAvailable = (total / limit).ceil();
 
         final leftText = actualPage > 0 ? '$actualPage' : '';
-        final centerText = 'Pag# ${actualPage + 1} / $maxPagesAvailable';
+        final centerText = 'Pag: ${actualPage + 1} / $maxPagesAvailable';
 
         final rightText =
             (actualPage + 1 < maxPagesAvailable) ? '${actualPage + 2}' : '';
 
-        onLeftPressetd() {
+        onLeftPressed() {
           ref
               .read(offsetProvider.notifier)
               .update((state) => state - apiLimitPerQuery);
@@ -58,36 +58,45 @@ class BottomPageNavigationBar extends ConsumerWidget {
               .update((state) => state + apiLimitPerQuery);
         }
 
+        final canGoLeft = actualPage > 1;
+        final canGoRight = actualPage + 2 <= maxPagesAvailable;
+
         return _BottomPageNavigationBar(
           leftText: leftText,
           centerText: centerText,
           rightText: rightText,
-          onLeftPressed: actualPage == 0 ? null : onLeftPressetd,
-          onRightPressed:
-              actualPage >= maxPagesAvailable - 1 ? null : onRightPressed,
+          maxPagesAvailable: maxPagesAvailable,
+          onLeftPressed: canGoLeft ? onLeftPressed : null,
+          onRightPressed: canGoRight ? onRightPressed : null,
+          offsetProvider: (canGoLeft || canGoRight) ? offsetProvider : null,
         );
       },
     );
   }
 }
 
-class _BottomPageNavigationBar extends StatelessWidget {
+class _BottomPageNavigationBar extends ConsumerWidget {
   final String leftText;
   final String centerText;
   final String rightText;
   final VoidCallback? onLeftPressed;
   final VoidCallback? onRightPressed;
+  final int? maxPagesAvailable;
+
+  final StateProvider<int>? offsetProvider;
 
   const _BottomPageNavigationBar({
     required this.leftText,
     required this.centerText,
     required this.rightText,
+    this.offsetProvider,
+    this.maxPagesAvailable,
     this.onLeftPressed,
     this.onRightPressed,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
@@ -99,7 +108,12 @@ class _BottomPageNavigationBar extends StatelessWidget {
               icon: const Icon(Icons.skip_previous_rounded),
               onPressed: onLeftPressed,
             ),
-            Text(centerText),
+            TextButton(
+                onPressed: offsetProvider == null
+                    ? null
+                    : () => onCenterBottomPressed(
+                        context, ref, offsetProvider!, maxPagesAvailable!),
+                child: Text(centerText)),
             FilledButton.icon(
               label: Text(rightText),
               icon: const Icon(Icons.skip_next_rounded),
@@ -108,6 +122,77 @@ class _BottomPageNavigationBar extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  void onCenterBottomPressed(
+    BuildContext context,
+    WidgetRef ref,
+    StateProvider<int> offsetProvider,
+    int maxPagesAvailable,
+  ) {
+    final numberController = TextEditingController();
+
+    onGoPressed() {
+      String number = numberController.text;
+
+      // Update offset to navigate to the page.
+      ref.read(offsetProvider.notifier).update((state) {
+        var newValue = int.tryParse(number);
+        if (newValue == null || newValue > maxPagesAvailable || newValue < 0) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text('Invalid page number'),
+              duration: const Duration(seconds: 2),
+              backgroundColor: Theme.of(context).primaryColor,
+            ),
+          );
+
+          return state;
+        }
+
+        if (newValue <= 1) newValue = 1;
+        newValue = (newValue - 1) * apiLimitPerQuery;
+
+        return newValue;
+      });
+      Navigator.pop(context);
+    }
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: IntrinsicHeight(
+            child: Column(
+              children: [
+                TextField(
+                  controller: numberController,
+                  maxLength: 2,
+                  autofocus: true,
+                  textAlign: TextAlign.center,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    counterText: '',
+                    hintText: 'Go to page',
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.all(8.0),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            FilledButton(onPressed: onGoPressed, child: const Text('Go')),
+          ],
+        );
+      },
     );
   }
 }
