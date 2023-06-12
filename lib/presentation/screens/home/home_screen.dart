@@ -51,7 +51,7 @@ class _HomeView extends ConsumerWidget {
           children: [
             // Photo Views.
             SizedBox(
-                height: 320,
+                height: 380,
                 width: double.infinity,
                 child: SinglePageView(
                   objectListWithThumbnails: characters,
