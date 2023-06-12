@@ -1,9 +1,7 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:superhero_demo/models/shared/price.dart';
 
-import '../../../config/constants/constants.dart';
 import '../../../models/comics/comics.dart';
 import '../../../utils/utils.dart';
 import '../../providers/providers.dart';
