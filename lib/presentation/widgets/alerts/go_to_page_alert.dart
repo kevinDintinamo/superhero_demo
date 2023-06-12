@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class GoToPageAlert extends StatelessWidget {
   final TextEditingController numberController;
-  final Function()? onGoPressed;
+  final Function() onGoPressed;
 
   const GoToPageAlert({
     super.key,
@@ -12,22 +12,28 @@ class GoToPageAlert extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const decoration = InputDecoration(
+      counterText: '',
+      hintText: 'Go to page',
+      hintStyle: TextStyle(color: Colors.grey, fontSize: 18),
+      border: InputBorder.none,
+      contentPadding: EdgeInsets.all(8.0),
+    );
+
     return AlertDialog(
       content: IntrinsicHeight(
         child: Column(
           children: [
             TextField(
-              controller: numberController,
               maxLength: 2,
+              textInputAction: TextInputAction.go,
+              onSubmitted: (value) => onGoPressed(),
+              onEditingComplete: () => onGoPressed(),
               autofocus: true,
-              textAlign: TextAlign.center,
+              decoration: decoration,
+              textAlign: TextAlign.left,
+              controller: numberController,
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                counterText: '',
-                hintText: 'Go to page',
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.all(8.0),
-              ),
             ),
           ],
         ),
