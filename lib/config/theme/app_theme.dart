@@ -35,6 +35,11 @@ class AppTheme {
         ),
         bodySmall: TextStyle(
           fontSize: 12,
+          // fontWeight: FontWeight.bold,
+          color: Colors.black38,
+        ),
+        labelSmall: TextStyle(
+          fontSize: 10,
           fontWeight: FontWeight.bold,
           color: Colors.black38,
         ),

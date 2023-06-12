@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:superhero_demo/config/constants/constants.dart';
 
 class SinglePageView extends ConsumerWidget {
   /// Must provide an object that has a `thumbnail` property of type `ImagePath`.
@@ -31,14 +32,13 @@ class SinglePageView extends ConsumerWidget {
           var isShown = index == subPageIndex;
           return Opacity(
             opacity: isShown ? 1 : 0.5,
-            child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 10),
-              decoration: const BoxDecoration(
-                color: Colors.red,
-                borderRadius: BorderRadius.all(Radius.circular(50.0)),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16.0),
+                child: _CustomImage(
+                    objectWithThumbnail: objectListWithThumbnails[index]),
               ),
-              child: _CustomImage(
-                  objectWithThumbnail: objectListWithThumbnails[index]),
             ),
           );
         });
@@ -51,8 +51,9 @@ class SinglePageView extends ConsumerWidget {
 
     return Column(
       children: [
-        const SizedBox(height: 20),
+        const SizedBox(height: 20.0),
         Expanded(child: pageView),
+        const SizedBox(height: 4.0),
         paginationText,
         const SizedBox(height: 4.0),
       ],
@@ -92,28 +93,50 @@ class _CustomImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var hasImage = objectWithThumbnail.thumbnail?.fullPath != null;
+    String fullPath =
+        objectWithThumbnail.thumbnail?.fullPath ?? defaulNetworkImageUrl;
 
-    if (!hasImage) {
-      return const Center(
-        child: Text('No image'),
-      );
-    }
+    final imageName = fullPath.split('/').last.split('.').first;
+    final isGenericImage = imageName == 'image_not_available';
 
-    return Image.network(
-      objectWithThumbnail.thumbnail?.fullPath,
-      fit: BoxFit.cover,
-      errorBuilder: (context, error, stackTrace) => Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: const [
-            Icon(Icons.error),
-            SizedBox(height: 10),
-            Text('Error loading image'),
-          ],
+    return FadeInImage.assetNetwork(
+      image: fullPath,
+      fit: isGenericImage ? BoxFit.fill : BoxFit.cover,
+      placeholder: defaultAssetImageUrl,
+      imageErrorBuilder: _imageErrorBuilder,
+    );
+  }
+
+  Widget _imageErrorBuilder(
+    BuildContext context,
+    Object error,
+    StackTrace? stackTrace,
+  ) {
+    final theme = Theme.of(context);
+    return Stack(
+      children: [
+        Opacity(
+          opacity: 0.5,
+          child: Image.asset(
+            defaultAssetImageUrl,
+            fit: BoxFit.cover,
+          ),
         ),
-      ),
+        Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Icon(Icons.error),
+              const SizedBox(height: 10),
+              Text(
+                'Error loading image',
+                style: theme.textTheme.titleSmall,
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
