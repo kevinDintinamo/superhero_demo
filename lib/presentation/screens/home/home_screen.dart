@@ -144,7 +144,7 @@ class _MoreInfoActionWidgets extends ConsumerWidget {
           TonalButton(
             text: 'Series ($seriesCount)',
             iconData: Icons.ac_unit,
-            onPresed: seriesCount == 0
+            onPressed: seriesCount == 0
                 ? null
                 : () {
                     ref
@@ -156,7 +156,7 @@ class _MoreInfoActionWidgets extends ConsumerWidget {
           TonalButton(
             text: 'Comics ($comicsCount)',
             iconData: Icons.book,
-            onPresed: comicsCount == 0
+            onPressed: comicsCount == 0
                 ? null
                 : () {
                     ref
@@ -168,7 +168,7 @@ class _MoreInfoActionWidgets extends ConsumerWidget {
           TonalButton(
               text: 'Stories ($storiesCount)',
               iconData: Icons.battery_6_bar_sharp,
-              onPresed: storiesCount == 0
+              onPressed: storiesCount == 0
                   ? null
                   : () {
                       ref
@@ -179,7 +179,7 @@ class _MoreInfoActionWidgets extends ConsumerWidget {
           TonalButton(
             text: 'Events ($eventsCount)',
             iconData: Icons.event,
-            onPresed: eventsCount == 0
+            onPressed: eventsCount == 0
                 ? null
                 : () {
                     ref

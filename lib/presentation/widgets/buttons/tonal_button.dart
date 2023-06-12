@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 class TonalButton extends StatelessWidget {
   final String text;
   final IconData iconData;
-  final VoidCallback? onPresed;
+  final VoidCallback? onPressed;
   const TonalButton({
     super.key,
     required this.text,
     required this.iconData,
-    required this.onPresed,
+    required this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
     return FilledButton.tonal(
-      onPressed: onPresed,
+      onPressed: onPressed,
       child: IntrinsicWidth(
         child: Row(
           children: [
