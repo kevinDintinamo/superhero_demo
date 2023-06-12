@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../config/constants/constants.dart';
+import '../widgets.dart';
 
 class BottomPageNavigationBar extends ConsumerWidget {
   final FutureProvider dataProvider;
@@ -112,7 +113,11 @@ class _BottomPageNavigationBar extends ConsumerWidget {
                 onPressed: offsetProvider == null
                     ? null
                     : () => onCenterBottomPressed(
-                        context, ref, offsetProvider!, maxPagesAvailable!),
+                          context,
+                          ref,
+                          offsetProvider!,
+                          maxPagesAvailable!,
+                        ),
                 child: Text(centerText)),
             FilledButton.icon(
               label: Text(rightText),
@@ -162,35 +167,9 @@ class _BottomPageNavigationBar extends ConsumerWidget {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          content: IntrinsicHeight(
-            child: Column(
-              children: [
-                TextField(
-                  controller: numberController,
-                  maxLength: 2,
-                  autofocus: true,
-                  textAlign: TextAlign.center,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    counterText: '',
-                    hintText: 'Go to page',
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.all(8.0),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              child: const Text('Cancel'),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-            FilledButton(onPressed: onGoPressed, child: const Text('Go')),
-          ],
+        return GoToPageAlert(
+          onGoPressed: onGoPressed,
+          numberController: numberController,
         );
       },
     );
