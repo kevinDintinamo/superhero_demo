@@ -1,9 +1,9 @@
-# superhero_demoSuper 
+# Super Heroe Demo
 
-Prueba técnica de flutter
+Flutter technical test consuming Marvel Api.
 
 
-# Dev
+## Dev Instructions
 
 In order the project to work: Api keys must be provided.
 
