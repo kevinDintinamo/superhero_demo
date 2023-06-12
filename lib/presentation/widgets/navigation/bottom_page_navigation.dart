@@ -99,19 +99,17 @@ class _BottomPageNavigationBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    const duration = Duration(milliseconds: 300);
-
     return SafeArea(
       child: SlideInUp(
-        duration: duration,
+        duration: animationDuration,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SlideInLeft(
-                delay: duration,
-                duration: duration,
+                delay: animationDuration,
+                duration: animationDuration,
                 child: FilledButton.icon(
                   label: Text(leftText),
                   icon: const Icon(Icons.skip_previous_rounded),
@@ -129,8 +127,8 @@ class _BottomPageNavigationBar extends ConsumerWidget {
                           ),
                   child: Text(centerText)),
               SlideInRight(
-                delay: duration,
-                duration: duration,
+                delay: animationDuration,
+                duration: animationDuration,
                 child: FilledButton.icon(
                   label: Text(rightText),
                   icon: const Icon(Icons.skip_next_rounded),
