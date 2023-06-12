@@ -151,28 +151,28 @@ class _MoreInfoActionWidgets extends ConsumerWidget {
         children: [
           TonalButton(
             text: 'Series ($seriesCount)',
-            iconData: Icons.ac_unit,
+            iconData: Icons.collections_bookmark_outlined,
             onPressed: seriesCount == 0
                 ? null
                 : () => _onPressed(context, ref, SeriesScreen.screenName),
           ),
           TonalButton(
             text: 'Comics ($comicsCount)',
-            iconData: Icons.book,
+            iconData: Icons.menu_book_outlined,
             onPressed: comicsCount == 0
                 ? null
                 : () => _onPressed(context, ref, ComicsScreen.screenName),
           ),
           TonalButton(
             text: 'Stories ($storiesCount)',
-            iconData: Icons.battery_6_bar_sharp,
+            iconData: Icons.bookmark_add_outlined,
             onPressed: storiesCount == 0
                 ? null
                 : () => _onPressed(context, ref, StoriesScreen.screenName),
           ),
           TonalButton(
             text: 'Events ($eventsCount)',
-            iconData: Icons.event,
+            iconData: Icons.playlist_add_check_circle_outlined,
             onPressed: eventsCount == 0
                 ? null
                 : () => _onPressed(context, ref, EventsScreen.screenName),

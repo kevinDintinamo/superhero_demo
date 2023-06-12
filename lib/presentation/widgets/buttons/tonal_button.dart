@@ -13,12 +13,17 @@ class TonalButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final primaryColor = Theme.of(context).colorScheme.primary;
+
     return FilledButton.tonal(
       onPressed: onPressed,
       child: IntrinsicWidth(
         child: Row(
           children: [
-            Icon(iconData),
+            Icon(
+              iconData,
+              color: primaryColor.withOpacity(onPressed == null ? .4 : 1),
+            ),
             const SizedBox(width: 8.0),
             // Promote a more symmetrical size.
             ConstrainedBox(
