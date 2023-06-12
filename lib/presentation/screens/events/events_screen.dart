@@ -6,17 +6,14 @@ import '../../../utils/utils.dart';
 import '../../providers/providers.dart';
 import '../../widgets/widgets.dart';
 
-class EventsScreen extends StatelessWidget {
+class EventsScreen extends ConsumerWidget {
   static const screenName = 'events_screen';
 
   const EventsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final appBar = AppBar(
-      centerTitle: true,
-      title: const Text('Events'),
-    );
+  Widget build(BuildContext context, ref) {
+    final appBar = customAppBar('Events', ref);
 
     return Scaffold(
       appBar: appBar,

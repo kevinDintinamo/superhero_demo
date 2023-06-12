@@ -6,17 +6,14 @@ import '../../../utils/utils.dart';
 import '../../providers/providers.dart';
 import '../../widgets/widgets.dart';
 
-class StoriesScreen extends StatelessWidget {
+class StoriesScreen extends ConsumerWidget {
   static const screenName = 'stories_screen';
 
   const StoriesScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final appBar = AppBar(
-      centerTitle: true,
-      title: const Text('Stories'),
-    );
+  Widget build(BuildContext context, ref) {
+    final appBar = customAppBar('Stories', ref);
 
     return Scaffold(
       appBar: appBar,
@@ -81,6 +78,9 @@ class _DetailedInfoWidget extends ConsumerWidget {
     final modifiedDate =
         Utils.getDateFormatted(stories[subPageIndex].modifiedDate);
 
+    var description = stories[subPageIndex].description;
+    if (description.isEmpty) description = 'No Description Available';
+
     return Padding(
       padding: const EdgeInsets.all(36.0),
       child: Column(
@@ -94,6 +94,7 @@ class _DetailedInfoWidget extends ConsumerWidget {
           ),
 
           const SizedBox(height: 4.0),
+
           // Page Count.
           Text(
             'Type: ${stories[subPageIndex].type}',
@@ -105,7 +106,7 @@ class _DetailedInfoWidget extends ConsumerWidget {
 
           // Description.
           Text(
-            stories[subPageIndex].description,
+            description,
             style: theme.textTheme.bodyMedium,
             textAlign: TextAlign.start,
           ),

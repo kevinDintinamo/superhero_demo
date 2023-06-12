@@ -7,17 +7,14 @@ import '../../../utils/utils.dart';
 import '../../providers/providers.dart';
 import '../../widgets/widgets.dart';
 
-class ComicsScreen extends StatelessWidget {
+class ComicsScreen extends ConsumerWidget {
   static const screenName = 'comics_screen';
 
   const ComicsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final appBar = AppBar(
-      centerTitle: true,
-      title: const Text('Comics'),
-    );
+  Widget build(BuildContext context, ref) {
+    final appBar = customAppBar('Comics', ref);
 
     return Scaffold(
       appBar: appBar,

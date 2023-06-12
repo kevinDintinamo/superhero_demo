@@ -89,6 +89,9 @@ class _DetailedInfoWidget extends StatelessWidget {
     final modifiedDate =
         Utils.getDateFormatted(characters[subPageIndex].modifiedDate);
 
+    var description = characters[subPageIndex].description;
+    if (description.isEmpty) description = 'No Description Available';
+
     return Padding(
       padding: const EdgeInsets.all(36.0),
       child: Column(
@@ -97,12 +100,12 @@ class _DetailedInfoWidget extends StatelessWidget {
           // Title.
           Text(
             characters[subPageIndex].name,
-            style: theme.textTheme.titleMedium,
+            style: theme.textTheme.titleMedium?.copyWith(color: Colors.black),
             textAlign: TextAlign.start,
           ),
           // Description.
           Text(
-            characters[subPageIndex].description,
+            description,
             style: theme.textTheme.bodyMedium,
             textAlign: TextAlign.start,
           ),
@@ -178,6 +181,10 @@ class _MoreInfoActionWidgets extends ConsumerWidget {
     ref
         .read(characterSelectedIdProvider.notifier)
         .update((state) => character.id);
+
+    ref
+        .read(characterSelectedNameProvider.notifier)
+        .update((state) => character.name);
 
     context.pushNamed(screenName);
   }

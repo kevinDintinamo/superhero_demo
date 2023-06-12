@@ -6,17 +6,14 @@ import '../../../utils/utils.dart';
 import '../../providers/providers.dart';
 import '../../widgets/widgets.dart';
 
-class SeriesScreen extends StatelessWidget {
+class SeriesScreen extends ConsumerWidget {
   static const screenName = 'series_screen';
 
   const SeriesScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final appBar = AppBar(
-      centerTitle: true,
-      title: const Text('Series'),
-    );
+  Widget build(BuildContext context, ref) {
+    final appBar = customAppBar('Series', ref);
 
     return Scaffold(
       appBar: appBar,
