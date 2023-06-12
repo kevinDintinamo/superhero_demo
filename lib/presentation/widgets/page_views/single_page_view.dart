@@ -34,7 +34,7 @@ class SinglePageView extends ConsumerWidget {
           return Opacity(
             opacity: isShown ? 1 : 0.5,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              padding: const EdgeInsets.all(16.0),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(16.0),
                 child: _CustomImage(
@@ -50,14 +50,24 @@ class SinglePageView extends ConsumerWidget {
       objectListWithThumbnails: objectListWithThumbnails,
     );
 
-    return Column(
-      children: [
-        const SizedBox(height: 20.0),
-        Expanded(child: pageView),
-        const SizedBox(height: 4.0),
-        paginationText,
-        const SizedBox(height: 4.0),
-      ],
+    final decoration = BoxDecoration(boxShadow: [
+      BoxShadow(
+          blurRadius: 10.0,
+          offset: const Offset(0, 10),
+          spreadRadius: 0.1,
+          color: theme.primaryColor.withOpacity(.05)),
+    ]);
+
+    return Container(
+      decoration: decoration,
+      child: Column(
+        children: [
+          const SizedBox(height: 20.0),
+          Expanded(child: pageView),
+          paginationText,
+          const SizedBox(height: 4.0),
+        ],
+      ),
     );
   }
 }
