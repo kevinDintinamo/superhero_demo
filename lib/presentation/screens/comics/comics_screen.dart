@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:superhero_demo/models/shared/price.dart';
 
 import '../../../models/comics/comics.dart';
 import '../../../utils/utils.dart';
@@ -81,6 +82,8 @@ class _DetailedInfoWidget extends ConsumerWidget {
     final modifiedDate =
         Utils.getDateFormatted(comics[subPageIndex].modifiedDate);
 
+    final prices = comics[subPageIndex].prices;
+
     return Padding(
       padding: const EdgeInsets.all(36.0),
       child: Column(
@@ -94,22 +97,13 @@ class _DetailedInfoWidget extends ConsumerWidget {
           ),
 
           const SizedBox(height: 4.0),
-          // Page Count.
+
           Text(
             'PageCount: ${comics[subPageIndex].pageCount}',
             style: theme.textTheme.bodyMedium
                 ?.copyWith(fontWeight: FontWeight.bold),
             textAlign: TextAlign.start,
           ),
-          const SizedBox(height: 8.0),
-
-          // Description.
-          Text(
-            comics[subPageIndex].description,
-            style: theme.textTheme.bodyMedium,
-            textAlign: TextAlign.start,
-          ),
-          const SizedBox(height: 8.0),
 
           // Modified Date.
           Text(
@@ -117,9 +111,73 @@ class _DetailedInfoWidget extends ConsumerWidget {
             style: theme.textTheme.bodySmall,
             textAlign: TextAlign.start,
           ),
+          // Description.
+          const SizedBox(height: 8.0),
+
+          Visibility(
+            visible: comics[subPageIndex].description != 'a',
+            child: Text(
+              comics[subPageIndex].description.isEmpty
+                  ? '...'
+                  : comics[subPageIndex].description,
+              style: theme.textTheme.bodyMedium,
+              textAlign: TextAlign.start,
+            ),
+          ),
+          const SizedBox(height: 8.0),
+
+          const SizedBox(height: 16.0),
+          // Prices.
+          _PricesWidget(prices: prices, theme: theme),
           const SizedBox(height: 24.0),
         ],
       ),
+    );
+  }
+}
+
+class _PricesWidget extends StatelessWidget {
+  const _PricesWidget({
+    required this.prices,
+    required this.theme,
+  });
+
+  final List<Price> prices;
+  final ThemeData theme;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: prices.length * 100.0,
+      child: ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: prices.length,
+          itemBuilder: (context, index) {
+            return Container(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              margin:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+              decoration: BoxDecoration(
+                color: theme.primaryColor.withOpacity(.05),
+                borderRadius: const BorderRadius.all(Radius.circular(24.0)),
+              ),
+              child: Column(
+                children: [
+                  IntrinsicWidth(
+                    child: Text(
+                      '\$${prices[index].price}',
+                      style: theme.textTheme.titleSmall
+                          ?.copyWith(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                  IntrinsicWidth(
+                    child: Text('${prices[index].type}'),
+                  )
+                ],
+              ),
+            );
+          }),
     );
   }
 }

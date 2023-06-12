@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import '../shared/image_path.dart';
+import '../shared/price.dart';
 
 Comic comicFromJson(String str) => Comic.fromJson(json.decode(str));
 
@@ -12,6 +13,7 @@ class Comic {
   final String title;
   final String description;
   final String modifiedDate;
+  final List<Price> prices;
   final ImagePath? thumbnail;
 
   Comic({
@@ -20,6 +22,7 @@ class Comic {
     required this.title,
     required this.description,
     required this.modifiedDate,
+    required this.prices,
     this.thumbnail,
   });
 
@@ -30,9 +33,15 @@ class Comic {
       title: json['title'] ?? '',
       description: json['description'] ?? '',
       modifiedDate: json['modified'] ?? '',
+      prices: _extractPrices(json),
       thumbnail: imagePathFromJsonMap(json['thumbnail']),
     );
   }
+
+  static List<Price> _extractPrices(Map<String, dynamic> json) =>
+      (json['prices'] as List<dynamic>)
+          .map((e) => Price.fromJson(e as Map<String, dynamic>))
+          .toList();
 
   Map<String, dynamic> toJson() => {
         "id": id,

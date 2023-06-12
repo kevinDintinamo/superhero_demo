@@ -10,7 +10,7 @@ class Price {
   factory Price.fromJson(Map<String, dynamic> json) {
     return Price(
       type: json['type'],
-      price: json['price'],
+      price: double.tryParse('${json['price']}') ?? 0.0,
     );
   }
 }
