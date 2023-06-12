@@ -30,3 +30,7 @@ final characterSubPageIndexProvider = StateProvider<int>((ref) {
 final characterSelectedIdProvider = StateProvider<int>((ref) {
   return 0;
 });
+
+final characterSelectedNameProvider = StateProvider<String>((ref) {
+  return '';
+});
