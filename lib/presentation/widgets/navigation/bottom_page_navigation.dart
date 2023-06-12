@@ -60,7 +60,7 @@ class BottomPageNavigationBar extends ConsumerWidget {
               .update((state) => state + apiLimitPerQuery);
         }
 
-        final canGoLeft = actualPage > 1;
+        final canGoLeft = actualPage > 0;
         final canGoRight = actualPage + 2 <= maxPagesAvailable;
 
         return _BottomPageNavigationBar(
