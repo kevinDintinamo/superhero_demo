@@ -27,7 +27,6 @@ class GoToPageAlert extends StatelessWidget {
             TextField(
               maxLength: 2,
               textInputAction: TextInputAction.go,
-              onSubmitted: (value) => onGoPressed(),
               onEditingComplete: () => onGoPressed(),
               autofocus: true,
               decoration: decoration,
