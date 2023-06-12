@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -98,33 +99,46 @@ class _BottomPageNavigationBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    const duration = Duration(milliseconds: 300);
+
     return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            FilledButton.icon(
-              label: Text(leftText),
-              icon: const Icon(Icons.skip_previous_rounded),
-              onPressed: onLeftPressed,
-            ),
-            TextButton(
-                onPressed: offsetProvider == null
-                    ? null
-                    : () => onCenterBottomPressed(
-                          context,
-                          ref,
-                          offsetProvider!,
-                          maxPagesAvailable!,
-                        ),
-                child: Text(centerText)),
-            FilledButton.icon(
-              label: Text(rightText),
-              icon: const Icon(Icons.skip_next_rounded),
-              onPressed: onRightPressed,
-            ),
-          ],
+      child: SlideInUp(
+        duration: duration,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SlideInLeft(
+                delay: duration,
+                duration: duration,
+                child: FilledButton.icon(
+                  label: Text(leftText),
+                  icon: const Icon(Icons.skip_previous_rounded),
+                  onPressed: onLeftPressed,
+                ),
+              ),
+              TextButton(
+                  onPressed: offsetProvider == null
+                      ? null
+                      : () => onCenterBottomPressed(
+                            context,
+                            ref,
+                            offsetProvider!,
+                            maxPagesAvailable!,
+                          ),
+                  child: Text(centerText)),
+              SlideInRight(
+                delay: duration,
+                duration: duration,
+                child: FilledButton.icon(
+                  label: Text(rightText),
+                  icon: const Icon(Icons.skip_next_rounded),
+                  onPressed: onRightPressed,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
