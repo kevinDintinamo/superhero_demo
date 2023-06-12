@@ -82,6 +82,9 @@ class _DetailedInfoWidget extends ConsumerWidget {
     final startDate = Utils.getDateFormatted(events[subPageIndex].startDate);
     final endDate = Utils.getDateFormatted(events[subPageIndex].endDate);
 
+    var description = events[subPageIndex].description;
+    if (description.isEmpty) description = 'No Description Available';
+
     return Padding(
       padding: const EdgeInsets.all(36.0),
       child: Column(
@@ -114,7 +117,7 @@ class _DetailedInfoWidget extends ConsumerWidget {
 
           // Description.
           Text(
-            events[subPageIndex].description,
+            description,
             style: theme.textTheme.bodyMedium,
             textAlign: TextAlign.start,
           ),

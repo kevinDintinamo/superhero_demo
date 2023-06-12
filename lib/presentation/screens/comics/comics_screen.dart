@@ -81,6 +81,9 @@ class _DetailedInfoWidget extends ConsumerWidget {
 
     final prices = comics[subPageIndex].prices;
 
+    var description = comics[subPageIndex].description;
+    if (description.isEmpty) description = 'No Description Available';
+
     return Padding(
       padding: const EdgeInsets.all(36.0),
       child: Column(
@@ -111,15 +114,10 @@ class _DetailedInfoWidget extends ConsumerWidget {
           // Description.
           const SizedBox(height: 8.0),
 
-          Visibility(
-            visible: comics[subPageIndex].description != 'a',
-            child: Text(
-              comics[subPageIndex].description.isEmpty
-                  ? '...'
-                  : comics[subPageIndex].description,
-              style: theme.textTheme.bodyMedium,
-              textAlign: TextAlign.start,
-            ),
+          Text(
+            description,
+            style: theme.textTheme.bodyMedium,
+            textAlign: TextAlign.start,
           ),
           const SizedBox(height: 8.0),
 

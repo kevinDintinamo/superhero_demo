@@ -81,6 +81,9 @@ class _DetailedInfoWidget extends ConsumerWidget {
     final startDate = series[subPageIndex].startYear;
     final endDate = series[subPageIndex].endYear;
 
+    var description = series[subPageIndex].description;
+    if (description.isEmpty) description = 'No Description Available';
+
     return Padding(
       padding: const EdgeInsets.all(36.0),
       child: Column(
@@ -96,7 +99,7 @@ class _DetailedInfoWidget extends ConsumerWidget {
           const SizedBox(height: 4.0),
           // Start Date.
           Text(
-            'Start: $startDate',
+            'Start year: $startDate',
             style: theme.textTheme.bodyMedium
                 ?.copyWith(fontWeight: FontWeight.bold),
             textAlign: TextAlign.start,
@@ -104,7 +107,7 @@ class _DetailedInfoWidget extends ConsumerWidget {
 
           // End Date.
           Text(
-            'End: $endDate',
+            'End year:   $endDate',
             style: theme.textTheme.bodyMedium
                 ?.copyWith(fontWeight: FontWeight.bold),
             textAlign: TextAlign.start,
@@ -113,7 +116,7 @@ class _DetailedInfoWidget extends ConsumerWidget {
 
           // Description.
           Text(
-            series[subPageIndex].description,
+            description,
             style: theme.textTheme.bodyMedium,
             textAlign: TextAlign.start,
           ),
