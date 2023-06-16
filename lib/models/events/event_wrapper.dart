@@ -17,4 +17,15 @@ class EventWrapper extends DataWrapper {
             total: total,
             count: count,
             results: results);
+
+  factory EventWrapper.empty() {
+    return EventWrapper(
+      offset: 0,
+      limit: 0,
+      total: 0,
+      count: 0,
+      results: [],
+      events: <Event>[],
+    );
+  }
 }

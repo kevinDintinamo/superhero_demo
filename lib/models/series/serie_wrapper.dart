@@ -17,4 +17,15 @@ class SerieWrapper extends DataWrapper {
             total: total,
             count: count,
             results: results);
+
+  factory SerieWrapper.empty() {
+    return SerieWrapper(
+      offset: 0,
+      limit: 0,
+      total: 0,
+      count: 0,
+      results: [],
+      series: <Serie>[],
+    );
+  }
 }

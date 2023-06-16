@@ -17,4 +17,15 @@ class ComicWrapper extends DataWrapper {
             total: total,
             count: count,
             results: results);
+
+  factory ComicWrapper.empty() {
+    return ComicWrapper(
+      offset: 0,
+      limit: 0,
+      total: 0,
+      count: 0,
+      results: [],
+      comics: <Comic>[],
+    );
+  }
 }

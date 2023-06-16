@@ -17,4 +17,15 @@ class CharacterWrapper extends DataWrapper {
             total: total,
             count: count,
             results: results);
+
+  factory CharacterWrapper.empty() {
+    return CharacterWrapper(
+      offset: 0,
+      limit: 0,
+      total: 0,
+      count: 0,
+      results: [],
+      characters: <Character>[],
+    );
+  }
 }
