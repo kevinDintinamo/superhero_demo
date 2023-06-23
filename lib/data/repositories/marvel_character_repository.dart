@@ -1,17 +1,12 @@
-import 'dart:convert';
-
-import 'package:crypto/crypto.dart';
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
-import '../../config/constants/constants.dart';
-import '../../config/constants/environment.dart';
-import '../../models/shared/data_wrapper.dart';
 import '../data_sources/character_data_source.dart';
+import '../shared/get_data.dart';
 
 class MarvelCharacterRepository implements CharacterDataSource {
   @override
-  String baseUrl;
+  final String baseUrl;
+  final String preffixUrl = '/characters';
 
   MarvelCharacterRepository({
     this.baseUrl = 'https://gateway.marvel.com/v1/public',
@@ -19,17 +14,15 @@ class MarvelCharacterRepository implements CharacterDataSource {
 
   @override
   Future<CharacterWrapper> getCharacters({int offset = 0}) async {
-    var data = await _getDataFromApi(offset: offset);
+    var data = await getDataFromApi(
+      http.Client(),
+      offset: offset,
+      baseUrl: baseUrl,
+      relativeUrl: preffixUrl,
+    );
 
     if (data == null || data.results.isEmpty) {
-      return CharacterWrapper(
-        offset: 0,
-        limit: apiLimitPerQuery,
-        total: 0,
-        count: 0,
-        results: [],
-        characters: <Character>[],
-      );
+      return CharacterWrapper.empty();
     }
 
     final characterList =
@@ -49,20 +42,15 @@ class MarvelCharacterRepository implements CharacterDataSource {
 
   @override
   Future<ComicWrapper> getComics(int characterId, {int offset = 0}) async {
-    final data = await _getDataFromApi(
-      url: 'characters/$characterId/comics',
+    final data = await getDataFromApi(
+      http.Client(),
       offset: offset,
+      baseUrl: baseUrl,
+      relativeUrl: '$preffixUrl/$characterId/comics',
     );
 
     if (data == null || data.results.isEmpty) {
-      return ComicWrapper(
-        offset: 0,
-        limit: 20,
-        total: 0,
-        count: 0,
-        results: [],
-        comics: [],
-      );
+      return ComicWrapper.empty();
     }
 
     final comicList = data.results.map((e) => Comic.fromJson(e)).toList();
@@ -81,20 +69,15 @@ class MarvelCharacterRepository implements CharacterDataSource {
 
   @override
   Future<EventWrapper> getEvents(int characterId, {int offset = 0}) async {
-    final data = await _getDataFromApi(
-      url: 'characters/$characterId/events',
+    final data = await getDataFromApi(
+      http.Client(),
       offset: offset,
+      baseUrl: baseUrl,
+      relativeUrl: '$preffixUrl/$characterId/events',
     );
 
     if (data == null || data.results.isEmpty) {
-      return EventWrapper(
-        offset: 0,
-        limit: apiLimitPerQuery,
-        total: 0,
-        count: 0,
-        results: [],
-        events: [],
-      );
+      return EventWrapper.empty();
     }
 
     final eventList = data.results.map((e) => Event.fromJson(e)).toList();
@@ -113,20 +96,15 @@ class MarvelCharacterRepository implements CharacterDataSource {
 
   @override
   Future<SerieWrapper> getSeries(int characterId, {int offset = 0}) async {
-    final data = await _getDataFromApi(
-      url: 'characters/$characterId/series',
+    final data = await getDataFromApi(
+      http.Client(),
       offset: offset,
+      baseUrl: baseUrl,
+      relativeUrl: '$preffixUrl/$characterId/series',
     );
 
     if (data == null || data.results.isEmpty) {
-      return SerieWrapper(
-        offset: 0,
-        limit: apiLimitPerQuery,
-        total: 0,
-        count: 0,
-        results: [],
-        series: [],
-      );
+      return SerieWrapper.empty();
     }
 
     final serieList = data.results.map((e) => Serie.fromJson(e)).toList();
@@ -145,20 +123,15 @@ class MarvelCharacterRepository implements CharacterDataSource {
 
   @override
   Future<StoryWrapper> getStories(int characterId, {int offset = 0}) async {
-    final data = await _getDataFromApi(
-      url: 'characters/$characterId/stories',
+    final data = await getDataFromApi(
+      http.Client(),
       offset: offset,
+      baseUrl: baseUrl,
+      relativeUrl: '$preffixUrl/$characterId/stories',
     );
 
     if (data == null || data.results.isEmpty) {
-      return StoryWrapper(
-        offset: 0,
-        limit: apiLimitPerQuery,
-        total: 0,
-        count: 0,
-        results: [],
-        stories: [],
-      );
+      return StoryWrapper.empty();
     }
 
     final storyList = data.results.map((e) => Story.fromJson(e)).toList();
@@ -173,35 +146,5 @@ class MarvelCharacterRepository implements CharacterDataSource {
     );
 
     return storyWrapper;
-  }
-
-  Future<DataWrapper?> _getDataFromApi(
-      {String url = 'characters', int offset = 0}) async {
-    final publicKey = Environment.marvelPublicKey;
-    final privateKey = Environment.marvelPrivateKey;
-    final timestamp = DateTime.now().millisecondsSinceEpoch.toString();
-    final hash = md5.convert(utf8.encode(timestamp + privateKey + publicKey));
-
-    var getUrl = '$baseUrl/$url?ts=$timestamp'
-        '&apikey=$publicKey&hash=$hash&limit=$apiLimitPerQuery';
-
-    if (offset > 0) getUrl += '&offset=$offset';
-
-    try {
-      final response = await http.get(Uri.parse(getUrl));
-      final decodedData = json.decode(response.body)["data"];
-
-      final data = DataWrapper.fromJson(decodedData);
-
-      return data;
-    } catch (e) {
-      if (kDebugMode) {
-        print('ERROR on URL: /$url');
-        print('ERROR: $e');
-
-        print('Complete URL: $getUrl');
-      }
-      return null;
-    }
   }
 }

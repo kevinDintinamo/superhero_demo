@@ -11,7 +11,7 @@ export '/models/series/series.dart';
 export '/models/stories/stories.dart';
 
 abstract class CharacterDataSource {
-  String baseUrl;
+  final String baseUrl;
 
   CharacterDataSource(this.baseUrl);
 
